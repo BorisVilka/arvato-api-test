@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.arvato.api.service.ArvatoClientServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-03-04T12:59:09" hostname="DESKTOP-FQ05ST1" time="0.239">
+  <properties/>
+  <testcase name="PushRequest (регистрация тикета stockstate, date-to=2025-12-31): ответ 200 и идентификатор тикета" classname="ru.arvato.api.service.ArvatoClientServiceTest" time="0.139"/>
+  <testcase name="Login: ответ 200 и возвращается JWT (сгенерированная модель AccountCredentials -&gt; String)" classname="ru.arvato.api.service.ArvatoClientServiceTest" time="0.042"/>
+  <testcase name="GetStockstate: ответ 200 и данные с полем stock-item (сгенерированная модель Stockstate)" classname="ru.arvato.api.service.ArvatoClientServiceTest" time="0.056"/>
+  <system-out><![CDATA[2026-03-04T15:59:09.124+03:00  INFO 41348 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [ru.arvato.api.service.ArvatoClientServiceTest]: ArvatoClientServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-04T15:59:09.131+03:00  INFO 41348 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration ru.arvato.api.ArvatoApiApplication for test class ru.arvato.api.service.ArvatoClientServiceTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-03-04T15:59:09.201+03:00  INFO 41348 --- [    Test worker] r.a.api.service.ArvatoClientServiceTest  : Starting ArvatoClientServiceTest using Java 17.0.16 with PID 41348 (started by boris in C:\Users\boris\java-projects\arvato-api-client)
+2026-03-04T15:59:09.201+03:00  INFO 41348 --- [    Test worker] r.a.api.service.ArvatoClientServiceTest  : No active profile set, falling back to 1 default profile: "default"
+2026-03-04T15:59:09.397+03:00  INFO 41348 --- [    Test worker] r.a.api.service.ArvatoClientServiceTest  : Started ArvatoClientServiceTest in 0.211 seconds (process running for 2.85)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,5472 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: info.russia@arvato-scs.com
+    name: Support
+  description: API description
+  title: ART Logistik exchange
+  version: ""
+servers:
+- description: General api url
+  url: https://api-prod.arvato.ru
+tags:
+- description: import orders
+  name: customer orders
+  x-interface:
+    interface type: inbound
+- description: Load product range
+  name: products
+  x-interface:
+    interface type: inbound
+- description: data retrieving
+  name: create request
+  x-interface:
+    interface type: outbound
+- description: data retrieving
+  name: request processing
+  x-interface:
+    interface type: outbound
+paths:
+  /products/importReceive:
+    put:
+      description: import receiving portions
+      operationId: importReceive
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/ProductReceiveList"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductReceiveList"
+        required: true
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: OK
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Bad request
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "422":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Unprocessable entity
+      security:
+      - jwt: []
+      summary: Import Receiving
+      tags:
+      - products
+      x-content-type: application/xml
+      x-accepts:
+      - '*/*'
+      - application/json
+      - application/xml
+      - plain/text
+  /products/moverequest:
+    put:
+      description: Move products request
+      operationId: moveReqt
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/MoveProductRequest"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoveProductRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: OK
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Bad request
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "422":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Unprocessable entity
+      security:
+      - jwt: []
+      summary: Move products request
+      tags:
+      - products
+      x-content-type: application/xml
+      x-accepts:
+      - '*/*'
+      - application/json
+      - application/xml
+      - plain/text
+  /products/importProduct:
+    put:
+      description: Update product variants
+      operationId: importMatmas
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/ProductList"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductList"
+        required: true
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: OK
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Bad request
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "422":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Unprocessable entity
+      security:
+      - jwt: []
+      summary: Update product variants
+      tags:
+      - products
+      x-content-type: application/xml
+      x-accepts:
+      - '*/*'
+      - application/json
+      - application/xml
+      - plain/text
+  /products/import:
+    put:
+      description: import lots
+      operationId: importProductList
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/BrandList"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BrandList"
+        required: true
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Success
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Bad request
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Forbidden
+        "422":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Unprocessable entity
+      security:
+      - jwt: []
+      summary: Import lots
+      tags:
+      - products
+      x-content-type: application/xml
+      x-accepts:
+      - '*/*'
+      - application/xml
+      - plain/text
+  /request:
+    get:
+      description: Push request and get ident
+      operationId: pushRequest
+      parameters:
+      - description: Type of data to export
+        explode: true
+        in: query
+        name: service
+        required: true
+        schema:
+          $ref: "#/components/schemas/Services"
+        style: form
+      - description: Optional URL to send response
+        explode: true
+        in: query
+        name: feedback-url
+        required: false
+        schema:
+          example: http://localhost
+          format: url
+          type: string
+        style: form
+      - description: Period start date in yyyy-MM-dd'T'HH:mm:ss format (or short yyyy-MM-dd
+          to API requests)
+        explode: true
+        in: query
+        name: date-from
+        required: false
+        schema:
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss
+          type: string
+        style: form
+      - description: Period finish date in yyyy-MM-dd'T'HH:mm:ss format (or short
+          yyyy-MM-dd to API requests)
+        explode: true
+        in: query
+        name: date-to
+        required: false
+        schema:
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss
+          type: string
+        style: form
+      - description: "Invoice number for PRODUCT_RECEIVE_CONFIRMATION, MOVEMENTS,\
+          \ PRODUCT_OUTGO_CONFIRMATION requests"
+        explode: true
+        in: query
+        name: invoice-nr
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Customer order number
+        explode: true
+        in: query
+        name: order-nr
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Sales channel (site or marketplace name) for STOCKSTATE_CHANNEL,\
+          \ ORDERSTATE requests"
+        explode: true
+        in: query
+        name: sales-channel
+        required: false
+        schema:
+          $ref: "#/components/schemas/SalesChannel"
+        style: form
+      responses:
+        "200":
+          content:
+            plain/text:
+              schema:
+                type: string
+            '*/*':
+              schema:
+                type: string
+          description: url to get a response
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              schema:
+                type: string
+            '*/*':
+              schema:
+                type: string
+          description: Forbidden
+      security:
+      - jwt: []
+      summary: Service request
+      tags:
+      - create request
+      x-accepts:
+      - '*/*'
+      - plain/text
+  /order/import:
+    post:
+      description: Load purchase orders
+      operationId: importOrders
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/OrderList"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderList"
+        required: true
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ImportState"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: OK
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Bad request
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "422":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ImportState"
+          description: Unprocessable entity
+      security:
+      - jwt: []
+      tags:
+      - customer orders
+      x-content-type: application/xml
+      x-accepts:
+      - '*/*'
+      - application/xml
+      - plain/text
+  /account/login:
+    post:
+      description: login
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountCredentials"
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        "403":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Forbidden
+      summary: Login
+      tags:
+      - login
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
+  /response/stockstate/{ticket}:
+    get:
+      description: get stockstate data by request ident
+      operationId: getStockstate
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Stockstate"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Stockstate"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Stockstate response
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/product-receive-confirmation/{ticket}:
+    get:
+      description: get receiving confirmation data by request ident
+      operationId: getReceiveConfirmation
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ProductReceiveConfirmation"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductReceiveConfirmation"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Product receive confirmation response
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/product-outgo-confirmation/{ticket}:
+    get:
+      description: get outgo confirmation data by request ident
+      operationId: getOutgoConfirmation
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ProductOutgoConfirmation"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductOutgoConfirmation"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Product outgo confirmation response
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/orderstate/{ticket}:
+    get:
+      description: get order state
+      operationId: getOrderState
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/OrderState"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderState"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Current order state
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/movements/{ticket}:
+    get:
+      description: get movements data
+      operationId: getMovements
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Movements"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movements"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Movements data
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/ordersent/{ticket}:
+    get:
+      description: orders sent
+      operationId: getOrderSent
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/OrderSent"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderSent"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Order sent
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/payments/{ticket}:
+    get:
+      description: Payments data
+      operationId: getPayments
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Payments"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payments"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Payments data
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/refunds/{ticket}:
+    get:
+      description: Refunds data
+      operationId: getRefunds
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Refunds"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Refunds"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Refunds data
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/returns/{ticket}:
+    get:
+      description: Returns data
+      operationId: getReturns
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Returns"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Returns"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Returns data
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/claims/{ticket}:
+    get:
+      description: Claims data
+      operationId: getClaims
+      parameters:
+      - explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Claims"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Claims"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+        "404":
+          content:
+            plain/text:
+              example: Not found
+          description: Not found
+        "425":
+          content:
+            plain/text:
+              example: Too early
+          description: Too Early
+        "500":
+          content:
+            plain/text:
+              example: Internal error
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Claims data
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+      - application/xml
+      - plain/text
+  /response/{type}/{ticket}:
+    head:
+      parameters:
+      - explode: false
+        in: path
+        name: type
+        required: true
+        schema:
+          description: request type
+          enum:
+          - claims
+          - movements
+          - ordersent
+          - orderstate
+          - payments
+          - product-outgo-confirmation
+          - product-receive-confirmation
+          - stockstate
+          - refunds
+          - returns
+          type: string
+        style: simple
+      - description: request number
+        explode: false
+        in: path
+        name: ticket
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+        "425":
+          description: Too Early
+        "500":
+          description: Internal Server Error
+      security:
+      - jwt: []
+      summary: Check if the answer is ready
+      tags:
+      - request processing
+      x-accepts:
+      - application/json
+  /dictionary:
+    get:
+      description: get dictionary data
+      operationId: dictionary
+      parameters:
+      - explode: true
+        in: query
+        name: dictionary
+        required: true
+        schema:
+          $ref: "#/components/schemas/Dictionaries"
+        style: form
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Dictionary"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dictionary"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Dictionary"
+          description: OK
+        "401":
+          content:
+            plain/text:
+              example: Unauthorized
+          description: Unauthorized
+        "403":
+          content:
+            plain/text:
+              example: Forbidden
+          description: Forbidden
+      security:
+      - jwt: []
+      summary: Dictionary data
+      tags:
+      - dictionaries
+      x-accepts:
+      - '*/*'
+      - application/json
+      - application/xml
+      - plain/text
+components:
+  schemas:
+    Parameter:
+      example:
+        param-name: param-name
+        param-type: "0"
+        value: value
+      properties:
+        value:
+          description: parameter value
+          type: string
+          xml:
+            attribute: true
+            name: value
+        param-name:
+          description: parameter name
+          type: string
+          xml:
+            attribute: true
+            name: param-name
+        param-type:
+          description: "parameter type (0 - boolean, 1 - number, 2 - string, 3 - date)"
+          enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          type: string
+          xml:
+            attribute: true
+            name: param-type
+      type: object
+    ProductReceive:
+      example:
+        invoice-nr: invoice-nr
+        invoice-date: 2000-01-23T04:56:07.000+00:00
+        product-receive-rows:
+          product-receive-row:
+          - container: C1
+            invoice-nr: INV123
+            document-amount: 0.8008281904610115
+            nr: P123456
+            best-before: 2000-01-23
+            nds-sum: 1.4658129805029452
+            sum: 6.027456183070403
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          - container: C1
+            invoice-nr: INV123
+            document-amount: 0.8008281904610115
+            nr: P123456
+            best-before: 2000-01-23
+            nds-sum: 1.4658129805029452
+            sum: 6.027456183070403
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        supplier:
+          contractor:
+            legal-address: legal-address
+            inn: inn
+            description: description
+            post-address: post-address
+            kpp: kpp
+            contractor-parameter:
+            - param-name: param-name
+              param-type: "0"
+              value: value
+            - param-name: param-name
+              param-type: "0"
+              value: value
+        comment: comment
+      properties:
+        invoice-nr:
+          description: invoice number
+          type: string
+          xml:
+            name: invoice-nr
+        invoice-date:
+          description: invoice date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss
+          title: invoice date
+          type: string
+          xml:
+            name: invoice-date
+        comment:
+          description: comment
+          type: string
+          xml:
+            name: comment
+        supplier:
+          $ref: "#/components/schemas/ProductReceive_supplier"
+        product-receive-rows:
+          $ref: "#/components/schemas/ProductReceiveRows"
+      required:
+      - invoice-date
+      - invoice-nr
+      type: object
+    ProductReceiveList:
+      example:
+        date: date
+        context: context
+        product-receive:
+        - invoice-nr: invoice-nr
+          invoice-date: 2000-01-23T04:56:07.000+00:00
+          product-receive-rows:
+            product-receive-row:
+            - container: C1
+              invoice-nr: INV123
+              document-amount: 0.8008281904610115
+              nr: P123456
+              best-before: 2000-01-23
+              nds-sum: 1.4658129805029452
+              sum: 6.027456183070403
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            - container: C1
+              invoice-nr: INV123
+              document-amount: 0.8008281904610115
+              nr: P123456
+              best-before: 2000-01-23
+              nds-sum: 1.4658129805029452
+              sum: 6.027456183070403
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          supplier:
+            contractor:
+              legal-address: legal-address
+              inn: inn
+              description: description
+              post-address: post-address
+              kpp: kpp
+              contractor-parameter:
+              - param-name: param-name
+                param-type: "0"
+                value: value
+              - param-name: param-name
+                param-type: "0"
+                value: value
+          comment: comment
+        - invoice-nr: invoice-nr
+          invoice-date: 2000-01-23T04:56:07.000+00:00
+          product-receive-rows:
+            product-receive-row:
+            - container: C1
+              invoice-nr: INV123
+              document-amount: 0.8008281904610115
+              nr: P123456
+              best-before: 2000-01-23
+              nds-sum: 1.4658129805029452
+              sum: 6.027456183070403
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            - container: C1
+              invoice-nr: INV123
+              document-amount: 0.8008281904610115
+              nr: P123456
+              best-before: 2000-01-23
+              nds-sum: 1.4658129805029452
+              sum: 6.027456183070403
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          supplier:
+            contractor:
+              legal-address: legal-address
+              inn: inn
+              description: description
+              post-address: post-address
+              kpp: kpp
+              contractor-parameter:
+              - param-name: param-name
+                param-type: "0"
+                value: value
+              - param-name: param-name
+                param-type: "0"
+                value: value
+          comment: comment
+      properties:
+        context:
+          description: request context
+          type: string
+          xml:
+            attribute: true
+        date:
+          description: create date
+          pattern: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+          type: string
+          xml:
+            attribute: true
+        product-receive:
+          items:
+            $ref: "#/components/schemas/ProductReceive"
+          minItems: 1
+          type: array
+          xml:
+            name: product-receive
+      required:
+      - product-receive
+      type: object
+      xml:
+        name: import
+    ProductReceiveRow:
+      example:
+        container: C1
+        invoice-nr: INV123
+        document-amount: 0.8008281904610115
+        nr: P123456
+        best-before: 2000-01-23
+        nds-sum: 1.4658129805029452
+        sum: 6.027456183070403
+        ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+      properties:
+        nr:
+          description: Product code
+          example: P123456
+          type: string
+        document-amount:
+          description: invoice amount
+          format: double
+          type: number
+          xml:
+            name: document-amount
+        sum:
+          description: position sum (RUR)
+          format: double
+          type: number
+        nds-sum:
+          description: nds sum
+          format: double
+          type: number
+          xml:
+            name: nds-sum
+        container:
+          description: container
+          example: C1
+          type: string
+        ml-uid:
+          description: SGTIN part
+          example: 010464004726001021GTtMACx5gwNde240640391ffe1
+          type: string
+          xml:
+            name: ml-uid
+        best-before:
+          description: expiration date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            name: best-before
+        invoice-nr:
+          description: part number
+          example: INV123
+          type: string
+          xml:
+            name: invoice-nr
+      required:
+      - document-amount
+      - nr
+      type: object
+    ProductReceiveRows:
+      example:
+        product-receive-row:
+        - container: C1
+          invoice-nr: INV123
+          document-amount: 0.8008281904610115
+          nr: P123456
+          best-before: 2000-01-23
+          nds-sum: 1.4658129805029452
+          sum: 6.027456183070403
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        - container: C1
+          invoice-nr: INV123
+          document-amount: 0.8008281904610115
+          nr: P123456
+          best-before: 2000-01-23
+          nds-sum: 1.4658129805029452
+          sum: 6.027456183070403
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+      properties:
+        product-receive-row:
+          items:
+            $ref: "#/components/schemas/ProductReceiveRow"
+          type: array
+          xml:
+            name: product-receive-row
+      type: object
+    ImportState:
+      example:
+        state:
+          message:
+          - message
+          - message
+          status: OK
+      properties:
+        state:
+          $ref: "#/components/schemas/StateData"
+      type: object
+      xml:
+        name: import
+    StateData:
+      example:
+        message:
+        - message
+        - message
+        status: OK
+      properties:
+        message:
+          items:
+            description: list of messages
+            type: string
+            xml:
+              name: message
+          type: array
+        status:
+          description: status
+          enum:
+          - OK
+          - ERROR
+          type: string
+      type: object
+    DictionaryRow:
+      description: dictionary data
+      example:
+        dictionary: dictionary
+        id: id
+        object-id: 0
+      properties:
+        dictionary:
+          type: string
+          xml:
+            attribute: true
+        id:
+          type: string
+          xml:
+            attribute: true
+        object-id:
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+            name: object-id
+      required:
+      - dictionary
+      - id
+      - object-id
+      type: object
+    Href:
+      properties:
+        link:
+          $ref: "#/components/schemas/Link"
+      type: object
+    Link:
+      properties:
+        href:
+          description: link to dictionary row
+          example: "#3"
+          type: string
+          xml:
+            attribute: true
+      type: object
+    Product:
+      description: Products
+      example:
+        parent: ""
+        product-parameter:
+        - param-name: param-name
+          param-type: "0"
+          value: value
+        - param-name: param-name
+          param-type: "0"
+          value: value
+        nr: P123456
+        length: "900"
+        description: description
+        weight: 7 800
+        type: ""
+        short-description: short-description
+        content:
+        - quantity: 2
+          nr: nr
+        - quantity: 2
+          nr: nr
+        is-group: true
+        price: "4500.99"
+        width: "350"
+        id: "229"
+        nds: ""
+        height: "200"
+      properties:
+        nr:
+          description: product code
+          example: P123456
+          type: string
+          xml:
+            attribute: true
+        description:
+          description: product description
+          type: string
+        short-description:
+          description: product short description
+          type: string
+          xml:
+            name: short-description
+        weight:
+          description: product weight
+          example: 7 800
+          type: string
+        length:
+          description: product length
+          example: "900"
+          type: string
+        width:
+          description: product width
+          example: "350"
+          type: string
+        height:
+          description: product height
+          example: "200"
+          type: string
+        price:
+          description: product price
+          example: "4500.99"
+          type: string
+        product-parameter:
+          items:
+            $ref: "#/components/schemas/Product_product_parameter_inner"
+          type: array
+          xml:
+            name: product-parameter
+        is-group:
+          description: whether product is group
+          type: boolean
+          xml:
+            name: is-group
+        nds:
+          allOf:
+          - $ref: "#/components/schemas/Href"
+          description: link to dictionary 'dic_nds' value
+        parent:
+          allOf:
+          - $ref: "#/components/schemas/Href"
+          description: link to product group described before with 'isGroup = true'
+        type:
+          allOf:
+          - $ref: "#/components/schemas/Href"
+          description: link to dictionary 'dic_product_type' value
+        id:
+          description: foreign product id
+          example: "229"
+          type: string
+          xml:
+            attribute: true
+        content:
+          description: complect contents
+          items:
+            $ref: "#/components/schemas/Product_content_inner"
+          type: array
+          xml:
+            name: content
+            wrapped: true
+      required:
+      - description
+      - nr
+      type: object
+    ProductList:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        product:
+        - parent: ""
+          product-parameter:
+          - param-name: param-name
+            param-type: "0"
+            value: value
+          - param-name: param-name
+            param-type: "0"
+            value: value
+          nr: P123456
+          length: "900"
+          description: description
+          weight: 7 800
+          type: ""
+          short-description: short-description
+          content:
+          - quantity: 2
+            nr: nr
+          - quantity: 2
+            nr: nr
+          is-group: true
+          price: "4500.99"
+          width: "350"
+          id: "229"
+          nds: ""
+          height: "200"
+        - parent: ""
+          product-parameter:
+          - param-name: param-name
+            param-type: "0"
+            value: value
+          - param-name: param-name
+            param-type: "0"
+            value: value
+          nr: P123456
+          length: "900"
+          description: description
+          weight: 7 800
+          type: ""
+          short-description: short-description
+          content:
+          - quantity: 2
+            nr: nr
+          - quantity: 2
+            nr: nr
+          is-group: true
+          price: "4500.99"
+          width: "350"
+          id: "229"
+          nds: ""
+          height: "200"
+        dictionary-row:
+        - dictionary: dictionary
+          id: id
+          object-id: 0
+        - dictionary: dictionary
+          id: id
+          object-id: 0
+        context: context
+      properties:
+        context:
+          description: request context
+          type: string
+          xml:
+            attribute: true
+        date:
+          description: create date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss
+          type: string
+          xml:
+            attribute: true
+        dictionary-row:
+          description: Dictionary data
+          items:
+            $ref: "#/components/schemas/DictionaryRow"
+          type: array
+          xml:
+            name: dictionary-row
+        product:
+          description: Products
+          items:
+            $ref: "#/components/schemas/Product"
+          type: array
+      type: object
+      xml:
+        name: import
+    BrandList:
+      example:
+        brandVariants:
+        - code: BV232
+          name: Lot name
+          alternativeName: Имя лота
+          type: type
+          products:
+          - code: DK0003.01
+          - code: DK0003.01
+        - code: BV232
+          name: Lot name
+          alternativeName: Имя лота
+          type: type
+          products:
+          - code: DK0003.01
+          - code: DK0003.01
+        date: 2000-01-23T04:56:07.000+00:00
+        context: context
+      properties:
+        brandVariants:
+          description: list of lots
+          items:
+            $ref: "#/components/schemas/BrandList_brandVariants_inner"
+          minItems: 1
+          type: array
+          xml:
+            name: BrandVariants
+            wrapped: true
+        context:
+          description: request context
+          type: string
+          xml:
+            attribute: true
+        date:
+          description: create date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss
+          type: string
+          xml:
+            attribute: true
+      required:
+      - brandVariants
+      type: object
+      xml:
+        name: import
+    MoveProductRequest:
+      example:
+        date: 2000-01-23
+        context: =login
+        movement-request:
+        - contractor:
+            legal-address: legal-address
+            inn: inn
+            recipient:
+              phone: "70001234567"
+              name: Фамилия Имя Отчество
+              delivery-address:
+              - type: Почтовый индекс
+                value: "101000"
+              - type: Почтовый индекс
+                value: "101000"
+            description: ООО "АРТ Логистик"
+            post-address: post-address
+            kpp: kpp
+          nr: M1111-00232
+          comment: Со склада А в склад Б
+          department-to:
+            id: 2
+          row:
+          - container: C1
+            product:
+              nr: P123456
+            quantity: 1
+            additional-info: additional-info
+            best-before: 2000-01-23
+            sum: 2156.12
+          - container: C1
+            product:
+              nr: P123456
+            quantity: 1
+            additional-info: additional-info
+            best-before: 2000-01-23
+            sum: 2156.12
+          type: OUTGO
+          department:
+            id: 5
+        - contractor:
+            legal-address: legal-address
+            inn: inn
+            recipient:
+              phone: "70001234567"
+              name: Фамилия Имя Отчество
+              delivery-address:
+              - type: Почтовый индекс
+                value: "101000"
+              - type: Почтовый индекс
+                value: "101000"
+            description: ООО "АРТ Логистик"
+            post-address: post-address
+            kpp: kpp
+          nr: M1111-00232
+          comment: Со склада А в склад Б
+          department-to:
+            id: 2
+          row:
+          - container: C1
+            product:
+              nr: P123456
+            quantity: 1
+            additional-info: additional-info
+            best-before: 2000-01-23
+            sum: 2156.12
+          - container: C1
+            product:
+              nr: P123456
+            quantity: 1
+            additional-info: additional-info
+            best-before: 2000-01-23
+            sum: 2156.12
+          type: OUTGO
+          department:
+            id: 5
+      properties:
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        date:
+          description: request date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            attribute: true
+        movement-request:
+          items:
+            $ref: "#/components/schemas/MoveProductRequest_movement_request_inner"
+          type: array
+      type: object
+      xml:
+        name: import
+    OrderList:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        context: =login
+        order:
+        - date: 2000-01-23T04:56:07.000+00:00
+          order-reason: order-reason
+          nr: nr
+          shipping-cost: 0.8008281904610115
+          action: ""
+          doc-parameter:
+          - param-name: param-name
+            param-type: "0"
+            value: value
+          - param-name: param-name
+            param-type: "0"
+            value: value
+          type: ""
+          sales-channel: site
+          order-rows:
+          - gross-price: 7.061401241503109
+            amount: 6.027456183070403
+            net-price: 2.3021358869347655
+            product:
+              nr: nr
+            coupon: coupon
+            swap:
+              swap-material: swap-material
+              swap-serial: swap-serial
+            item-number: 5
+            is-rent: true
+            nds-sum: 5.637376656633329
+            discount: 1.4658129805029452
+            sum: 2.027123023002322
+            measurement: ""
+            total: 9.301444243932576
+            free-product: true
+            reference-item-number: 3
+            price: 4.145608029883936
+            comment: comment
+          - gross-price: 7.061401241503109
+            amount: 6.027456183070403
+            net-price: 2.3021358869347655
+            product:
+              nr: nr
+            coupon: coupon
+            swap:
+              swap-material: swap-material
+              swap-serial: swap-serial
+            item-number: 5
+            is-rent: true
+            nds-sum: 5.637376656633329
+            discount: 1.4658129805029452
+            sum: 2.027123023002322
+            measurement: ""
+            total: 9.301444243932576
+            free-product: true
+            reference-item-number: 3
+            price: 4.145608029883936
+            comment: comment
+          shipping-method:
+            postamat-nr: postamat-nr
+            link: ""
+          customer:
+            area: Ярославский
+            region-part: "7600"
+            region-code: 76
+            nr: CUST123
+            additional: additional
+            index: "150000"
+            _settlement: Ярославль
+            house: "3"
+            building: "2"
+            phone:
+            - phone
+            - phone
+            person:
+              secondname: secondname
+              firstname: firstname
+              gender:
+                link:
+                  href: "#m"
+              email: email
+              lastname: lastname
+            street: street
+            construction: "1"
+            region: Ярославская обл.
+            apartment: "4"
+        - date: 2000-01-23T04:56:07.000+00:00
+          order-reason: order-reason
+          nr: nr
+          shipping-cost: 0.8008281904610115
+          action: ""
+          doc-parameter:
+          - param-name: param-name
+            param-type: "0"
+            value: value
+          - param-name: param-name
+            param-type: "0"
+            value: value
+          type: ""
+          sales-channel: site
+          order-rows:
+          - gross-price: 7.061401241503109
+            amount: 6.027456183070403
+            net-price: 2.3021358869347655
+            product:
+              nr: nr
+            coupon: coupon
+            swap:
+              swap-material: swap-material
+              swap-serial: swap-serial
+            item-number: 5
+            is-rent: true
+            nds-sum: 5.637376656633329
+            discount: 1.4658129805029452
+            sum: 2.027123023002322
+            measurement: ""
+            total: 9.301444243932576
+            free-product: true
+            reference-item-number: 3
+            price: 4.145608029883936
+            comment: comment
+          - gross-price: 7.061401241503109
+            amount: 6.027456183070403
+            net-price: 2.3021358869347655
+            product:
+              nr: nr
+            coupon: coupon
+            swap:
+              swap-material: swap-material
+              swap-serial: swap-serial
+            item-number: 5
+            is-rent: true
+            nds-sum: 5.637376656633329
+            discount: 1.4658129805029452
+            sum: 2.027123023002322
+            measurement: ""
+            total: 9.301444243932576
+            free-product: true
+            reference-item-number: 3
+            price: 4.145608029883936
+            comment: comment
+          shipping-method:
+            postamat-nr: postamat-nr
+            link: ""
+          customer:
+            area: Ярославский
+            region-part: "7600"
+            region-code: 76
+            nr: CUST123
+            additional: additional
+            index: "150000"
+            _settlement: Ярославль
+            house: "3"
+            building: "2"
+            phone:
+            - phone
+            - phone
+            person:
+              secondname: secondname
+              firstname: firstname
+              gender:
+                link:
+                  href: "#m"
+              email: email
+              lastname: lastname
+            street: street
+            construction: "1"
+            region: Ярославская обл.
+            apartment: "4"
+      properties:
+        order:
+          items:
+            $ref: "#/components/schemas/OrderList_order_inner"
+          minItems: 1
+          type: array
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        date:
+          description: order date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss
+          type: string
+          xml:
+            attribute: true
+      required:
+      - order
+      type: object
+      xml:
+        name: import
+    AccountCredentials:
+      example:
+        password: Zuvo4715
+        username: sa_apitest
+      properties:
+        username:
+          example: sa_apitest
+          type: string
+        password:
+          example: Zuvo4715
+          type: string
+      required:
+      - password
+      - username
+      type: object
+    StockItem:
+      description: stock position
+      example:
+        invoice-nr: invoice number
+        product:
+          product-parameter:
+          - param-name: product-size
+            param-type: "2"
+            value: "48"
+          - param-name: product-size
+            param-type: "2"
+            value: "48"
+          nr: D303
+          id: "1234567"
+        amount: 3
+        lifetime: 2000-01-23T04:56:07.000+00:00
+        warehouse: MAIN STOCK
+      properties:
+        product:
+          $ref: "#/components/schemas/StockstateProduct"
+        warehouse:
+          description: warehouse code
+          example: MAIN STOCK
+          type: string
+        lifetime:
+          description: best before
+          format: date-time
+          pattern: yyyy-MM-dd
+          type: string
+        amount:
+          description: stock amount
+          example: 3
+          format: double
+          type: number
+        invoice-nr:
+          description: invoice number
+          example: invoice number
+          type: string
+      type: object
+    Stockstate:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        stock-item:
+        - invoice-nr: invoice number
+          product:
+            product-parameter:
+            - param-name: product-size
+              param-type: "2"
+              value: "48"
+            - param-name: product-size
+              param-type: "2"
+              value: "48"
+            nr: D303
+            id: "1234567"
+          amount: 3
+          lifetime: 2000-01-23T04:56:07.000+00:00
+          warehouse: MAIN STOCK
+        - invoice-nr: invoice number
+          product:
+            product-parameter:
+            - param-name: product-size
+              param-type: "2"
+              value: "48"
+            - param-name: product-size
+              param-type: "2"
+              value: "48"
+            nr: D303
+            id: "1234567"
+          amount: 3
+          lifetime: 2000-01-23T04:56:07.000+00:00
+          warehouse: MAIN STOCK
+        context: =login
+      properties:
+        date:
+          description: date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+          type: string
+          xml:
+            attribute: true
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        stock-item:
+          description: stock position
+          items:
+            $ref: "#/components/schemas/StockItem"
+          type: array
+      type: object
+      xml:
+        name: export
+    StockstateProduct:
+      description: product
+      example:
+        product-parameter:
+        - param-name: product-size
+          param-type: "2"
+          value: "48"
+        - param-name: product-size
+          param-type: "2"
+          value: "48"
+        nr: D303
+        id: "1234567"
+      properties:
+        nr:
+          description: product code
+          example: D303
+          type: string
+          xml:
+            attribute: true
+        id:
+          description: internal identifier
+          example: "1234567"
+          type: string
+          xml:
+            attribute: true
+        product-parameter:
+          items:
+            $ref: "#/components/schemas/StockstateProductParameter"
+          type: array
+      type: object
+    StockstateProductParameter:
+      example:
+        param-name: product-size
+        param-type: "2"
+        value: "48"
+      properties:
+        param-name:
+          description: available product parameters
+          enum:
+          - product-size
+          - sku
+          - offer-nr
+          example: product-size
+          type: string
+          xml:
+            attribute: true
+        param-type:
+          description: "parameter type (0 - boolean, 1 - number, 2 - string, 3 - date)"
+          enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          example: "2"
+          type: string
+          xml:
+            attribute: true
+        value:
+          example: "48"
+          type: string
+          xml:
+            attribute: true
+            name: value
+      type: object
+    ProductReceiveConfirmation:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        context: =login
+        product-receive:
+        - invoice-nr: INV321
+          invoice-date: 2000-01-23T04:56:07.000+00:00
+          nr: "54352"
+          product-receive-rows:
+            product-receive-row:
+            - container: CN12654
+              product:
+                nr: X001
+              document-amount: 10
+              amount: 9
+              nds-sum: 20.58
+              sum: 123.45
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+              defect-amount: 1
+            - container: CN12654
+              product:
+                nr: X001
+              document-amount: 10
+              amount: 9
+              nds-sum: 20.58
+              sum: 123.45
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+              defect-amount: 1
+          supplier:
+            contractor:
+              supplier-id: SupplId
+        - invoice-nr: INV321
+          invoice-date: 2000-01-23T04:56:07.000+00:00
+          nr: "54352"
+          product-receive-rows:
+            product-receive-row:
+            - container: CN12654
+              product:
+                nr: X001
+              document-amount: 10
+              amount: 9
+              nds-sum: 20.58
+              sum: 123.45
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+              defect-amount: 1
+            - container: CN12654
+              product:
+                nr: X001
+              document-amount: 10
+              amount: 9
+              nds-sum: 20.58
+              sum: 123.45
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+              defect-amount: 1
+          supplier:
+            contractor:
+              supplier-id: SupplId
+      properties:
+        date:
+          description: create datetime
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+          title: create datetime
+          type: string
+          xml:
+            attribute: true
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        product-receive:
+          items:
+            $ref: "#/components/schemas/ProductReceiveConfirmationProductReceive"
+          type: array
+      type: object
+      xml:
+        name: product-receive-confirmation
+    ProductReceiveConfirmationProduct:
+      description: product
+      example:
+        nr: X001
+      properties:
+        nr:
+          description: product code
+          example: X001
+          type: string
+          xml:
+            attribute: true
+      type: object
+    ProductReceiveConfirmationProductReceive:
+      description: receiving document
+      example:
+        invoice-nr: INV321
+        invoice-date: 2000-01-23T04:56:07.000+00:00
+        nr: "54352"
+        product-receive-rows:
+          product-receive-row:
+          - container: CN12654
+            product:
+              nr: X001
+            document-amount: 10
+            amount: 9
+            nds-sum: 20.58
+            sum: 123.45
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            defect-amount: 1
+          - container: CN12654
+            product:
+              nr: X001
+            document-amount: 10
+            amount: 9
+            nds-sum: 20.58
+            sum: 123.45
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            defect-amount: 1
+        supplier:
+          contractor:
+            supplier-id: SupplId
+      properties:
+        nr:
+          description: document number
+          example: "54352"
+          type: string
+        supplier:
+          $ref: "#/components/schemas/ProductReceiveConfirmationProductReceive_supplier"
+        invoice-nr:
+          description: invoice number
+          example: INV321
+          type: string
+        invoice-date:
+          description: invoice date
+          format: date-time
+          pattern: yyyy-MM-dd
+          title: invoice date
+          type: string
+        product-receive-rows:
+          $ref: "#/components/schemas/ProductReceiveConfirmationRows"
+      type: object
+    ProductReceiveConfirmationRow:
+      description: position
+      example:
+        container: CN12654
+        product:
+          nr: X001
+        document-amount: 10
+        amount: 9
+        nds-sum: 20.58
+        sum: 123.45
+        ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        defect-amount: 1
+      properties:
+        product:
+          $ref: "#/components/schemas/ProductReceiveConfirmationProduct"
+        document-amount:
+          description: document amount
+          example: 10
+          format: double
+          type: number
+          xml:
+            name: document-amount
+        amount:
+          description: amount
+          example: 9
+          format: double
+          type: number
+        defect-amount:
+          description: defect amount
+          example: 1
+          format: double
+          type: number
+          xml:
+            name: defect-amount
+        sum:
+          description: row sum (RUR)
+          example: 123.45
+          format: double
+          type: number
+        nds-sum:
+          description: nds sum
+          example: 20.58
+          format: double
+          type: number
+          xml:
+            name: nds-sum
+        container:
+          description: pallet number
+          example: CN12654
+          type: string
+        ml-uid:
+          description: SGTIN part
+          example: 010464004726001021GTtMACx5gwNde240640391ffe1
+          type: string
+          xml:
+            name: ml-uid
+      type: object
+    ProductReceiveConfirmationRows:
+      description: list of positions
+      example:
+        product-receive-row:
+        - container: CN12654
+          product:
+            nr: X001
+          document-amount: 10
+          amount: 9
+          nds-sum: 20.58
+          sum: 123.45
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          defect-amount: 1
+        - container: CN12654
+          product:
+            nr: X001
+          document-amount: 10
+          amount: 9
+          nds-sum: 20.58
+          sum: 123.45
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          defect-amount: 1
+      properties:
+        product-receive-row:
+          items:
+            $ref: "#/components/schemas/ProductReceiveConfirmationRow"
+          type: array
+      type: object
+    OrderState:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        context: =login
+        order:
+        - status-date: 2000-01-23T04:56:07.000+00:00
+          nr: d100029794
+          storno-reason: По просьбе заказчика
+          rows:
+          - lock-reason: Нет в наличии
+            product:
+              nr: B1
+            amount: 0.8008281904610115
+          - lock-reason: Нет в наличии
+            product:
+              nr: B1
+            amount: 0.8008281904610115
+          status: ORDER_RECEIVED
+          tracking-number: "5453266426"
+        - status-date: 2000-01-23T04:56:07.000+00:00
+          nr: d100029794
+          storno-reason: По просьбе заказчика
+          rows:
+          - lock-reason: Нет в наличии
+            product:
+              nr: B1
+            amount: 0.8008281904610115
+          - lock-reason: Нет в наличии
+            product:
+              nr: B1
+            amount: 0.8008281904610115
+          status: ORDER_RECEIVED
+          tracking-number: "5453266426"
+      properties:
+        date:
+          description: create date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss'Z'
+          type: string
+          xml:
+            attribute: true
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        order:
+          items:
+            $ref: "#/components/schemas/OrderState_order_inner"
+          type: array
+      type: object
+      xml:
+        name: export
+    Payments:
+      example:
+        date: 2000-01-23
+        payment:
+        - date: 2000-01-23
+          parcel:
+            order-nr: order-nr
+            product:
+            - amount: 1
+              nr: nr
+              sum: 123.45
+            - amount: 1
+              nr: nr
+              sum: 123.45
+            nr: nr
+            invoiceId: invoiceId
+          nr: nr
+          sum: 123.45
+        - date: 2000-01-23
+          parcel:
+            order-nr: order-nr
+            product:
+            - amount: 1
+              nr: nr
+              sum: 123.45
+            - amount: 1
+              nr: nr
+              sum: 123.45
+            nr: nr
+            invoiceId: invoiceId
+          nr: nr
+          sum: 123.45
+      properties:
+        date:
+          description: create datetime
+          format: date
+          pattern: yyyy-MM-dd'T'HH:mm:ss'Z'
+          type: string
+          xml:
+            attribute: true
+        payment:
+          items:
+            $ref: "#/components/schemas/Payments_payment_inner"
+          type: array
+      type: object
+      xml:
+        name: export
+    OrderSent:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        context: =login
+        order:
+        - parcel:
+            nr: XX123-456
+            shipped-date: 2000-01-23T04:56:07.000+00:00
+            weight: 1260
+            air-rate: 253.65
+            return-barcode: "012345678910"
+            row:
+            - invoice-nr: 2103-111111
+              ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+              product:
+                product-parameter:
+                  param-name: product-size
+                  param-type: "2"
+                  value: "48"
+                nr: X001
+              amount: 2
+              price: 399
+              best-before: 2000-01-23
+              j-uid: "2000000073950000"
+              sum: 600
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            - invoice-nr: 2103-111111
+              ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+              product:
+                product-parameter:
+                  param-name: product-size
+                  param-type: "2"
+                  value: "48"
+                nr: X001
+              amount: 2
+              price: 399
+              best-before: 2000-01-23
+              j-uid: "2000000073950000"
+              sum: 600
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            shipping-rate: 160
+            insurance-rate: 18.1
+          nr: ORD0000023
+          shipping-method:
+            link: ""
+            type_of_delivery: Почта России
+        - parcel:
+            nr: XX123-456
+            shipped-date: 2000-01-23T04:56:07.000+00:00
+            weight: 1260
+            air-rate: 253.65
+            return-barcode: "012345678910"
+            row:
+            - invoice-nr: 2103-111111
+              ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+              product:
+                product-parameter:
+                  param-name: product-size
+                  param-type: "2"
+                  value: "48"
+                nr: X001
+              amount: 2
+              price: 399
+              best-before: 2000-01-23
+              j-uid: "2000000073950000"
+              sum: 600
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            - invoice-nr: 2103-111111
+              ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+              product:
+                product-parameter:
+                  param-name: product-size
+                  param-type: "2"
+                  value: "48"
+                nr: X001
+              amount: 2
+              price: 399
+              best-before: 2000-01-23
+              j-uid: "2000000073950000"
+              sum: 600
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            shipping-rate: 160
+            insurance-rate: 18.1
+          nr: ORD0000023
+          shipping-method:
+            link: ""
+            type_of_delivery: Почта России
+      properties:
+        date:
+          description: create date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+          type: string
+          xml:
+            attribute: true
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        order:
+          items:
+            $ref: "#/components/schemas/OrderSent_order_inner"
+          type: array
+      type: object
+      xml:
+        name: export
+    Returns:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        context: =login
+        return:
+        - date: 2000-01-23
+          reason: Истечение срока хранения
+          parcel:
+            order-nr: "212323656"
+            nr: "00000755129858"
+          document:
+            date: 2000-01-23
+            invoice-date: 2000-01-23
+            scan-date: 2000-01-23
+            nr: "430068"
+            invoice-number: "1509615600016875"
+          return-rate: 418.8
+          id: "71466074"
+          return-content:
+          - invoice-nr: "162784"
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            nr: P123456
+            best-before: 2000-01-23
+            j-uid: "1034004000062"
+            defective: PV-12
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            sum: 699
+          - invoice-nr: "162784"
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            nr: P123456
+            best-before: 2000-01-23
+            j-uid: "1034004000062"
+            defective: PV-12
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            sum: 699
+        - date: 2000-01-23
+          reason: Истечение срока хранения
+          parcel:
+            order-nr: "212323656"
+            nr: "00000755129858"
+          document:
+            date: 2000-01-23
+            invoice-date: 2000-01-23
+            scan-date: 2000-01-23
+            nr: "430068"
+            invoice-number: "1509615600016875"
+          return-rate: 418.8
+          id: "71466074"
+          return-content:
+          - invoice-nr: "162784"
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            nr: P123456
+            best-before: 2000-01-23
+            j-uid: "1034004000062"
+            defective: PV-12
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            sum: 699
+          - invoice-nr: "162784"
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            nr: P123456
+            best-before: 2000-01-23
+            j-uid: "1034004000062"
+            defective: PV-12
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            sum: 699
+      properties:
+        date:
+          description: create date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+          type: string
+          xml:
+            attribute: true
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        return:
+          items:
+            $ref: "#/components/schemas/Returns_return_inner"
+          type: array
+      type: object
+      xml:
+        name: export
+    Claims:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        context: =login
+        claim:
+        - date: 2000-01-23
+          parcel-nr: "32882237"
+          reason: Возврат клиентом рекламация
+          order-nr: "12474175"
+          nr: "669367"
+          income-parcel-nr: "19201217050453"
+          document:
+            date: 2000-01-23
+            invoice-date: 2000-01-23
+            scan-date: 2000-01-23
+            nr: "430068"
+            invoice-number: "1509615600016875"
+          additional-reason: Без возвратной формы
+          requirement: Отказ от получения
+          claim-content:
+          - reason: 5. Не подошел по размеру
+            product:
+              invoice-nr: "162784"
+              ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+              nr: "326434316288"
+              best-before: 2000-01-23
+              j-uid: "1034004000062"
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+              sum: 699
+            defective: true
+            defect-reason: 1. Брак
+            requirement: 2. Возврат денег
+          - reason: 5. Не подошел по размеру
+            product:
+              invoice-nr: "162784"
+              ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+              nr: "326434316288"
+              best-before: 2000-01-23
+              j-uid: "1034004000062"
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+              sum: 699
+            defective: true
+            defect-reason: 1. Брак
+            requirement: 2. Возврат денег
+          customer:
+            nr: "058926"
+        - date: 2000-01-23
+          parcel-nr: "32882237"
+          reason: Возврат клиентом рекламация
+          order-nr: "12474175"
+          nr: "669367"
+          income-parcel-nr: "19201217050453"
+          document:
+            date: 2000-01-23
+            invoice-date: 2000-01-23
+            scan-date: 2000-01-23
+            nr: "430068"
+            invoice-number: "1509615600016875"
+          additional-reason: Без возвратной формы
+          requirement: Отказ от получения
+          claim-content:
+          - reason: 5. Не подошел по размеру
+            product:
+              invoice-nr: "162784"
+              ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+              nr: "326434316288"
+              best-before: 2000-01-23
+              j-uid: "1034004000062"
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+              sum: 699
+            defective: true
+            defect-reason: 1. Брак
+            requirement: 2. Возврат денег
+          - reason: 5. Не подошел по размеру
+            product:
+              invoice-nr: "162784"
+              ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+              nr: "326434316288"
+              best-before: 2000-01-23
+              j-uid: "1034004000062"
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+              sum: 699
+            defective: true
+            defect-reason: 1. Брак
+            requirement: 2. Возврат денег
+          customer:
+            nr: "058926"
+      properties:
+        date:
+          description: create date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+          type: string
+          xml:
+            attribute: true
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        claim:
+          items:
+            $ref: "#/components/schemas/Claims_claim_inner"
+          type: array
+      type: object
+      xml:
+        name: export
+    ReturnDocument:
+      description: return portion
+      example:
+        date: 2000-01-23
+        invoice-date: 2000-01-23
+        scan-date: 2000-01-23
+        nr: "430068"
+        invoice-number: "1509615600016875"
+      properties:
+        nr:
+          description: document number
+          example: "430068"
+          type: string
+          xml:
+            attribute: true
+        invoice-number:
+          description: invoice number
+          example: "1509615600016875"
+          type: string
+          xml:
+            attribute: true
+            name: invoice-number
+        date:
+          description: return date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            attribute: true
+        scan-date:
+          description: parcel scanning date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            attribute: true
+            name: scan-date
+        invoice-date:
+          description: income invoice date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            attribute: true
+            name: invoice-date
+      required:
+      - date
+      - nr
+      type: object
+    Movements:
+      example:
+        date: 2000-01-23
+        document:
+        - date: 2000-01-23T04:56:07.000+00:00
+          invoice-nr: "2826"
+          invoice-date: 2000-01-23
+          contractor:
+            inn: "7700000000"
+            description: ООО "ООО"
+            id: "9999"
+          nr: "115209"
+          comment: №14-05-0585
+          id: 9912218
+          type: combine-kit
+          basis:
+            document:
+              nr: B2108-00007
+              id: 9912267
+          movement:
+          - invoice-nr: 1612-000226
+            container: CN12654
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            product:
+              nr: "40617639936"
+              barcode: barcode
+            amount: 24
+            trash_code: CV-3
+            best-before: 2000-01-23
+            j-uid: "2100000194353"
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            department:
+              id: 6
+              value: Брак на утилизацию
+          - invoice-nr: 1612-000226
+            container: CN12654
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            product:
+              nr: "40617639936"
+              barcode: barcode
+            amount: 24
+            trash_code: CV-3
+            best-before: 2000-01-23
+            j-uid: "2100000194353"
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            department:
+              id: 6
+              value: Брак на утилизацию
+        - date: 2000-01-23T04:56:07.000+00:00
+          invoice-nr: "2826"
+          invoice-date: 2000-01-23
+          contractor:
+            inn: "7700000000"
+            description: ООО "ООО"
+            id: "9999"
+          nr: "115209"
+          comment: №14-05-0585
+          id: 9912218
+          type: combine-kit
+          basis:
+            document:
+              nr: B2108-00007
+              id: 9912267
+          movement:
+          - invoice-nr: 1612-000226
+            container: CN12654
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            product:
+              nr: "40617639936"
+              barcode: barcode
+            amount: 24
+            trash_code: CV-3
+            best-before: 2000-01-23
+            j-uid: "2100000194353"
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            department:
+              id: 6
+              value: Брак на утилизацию
+          - invoice-nr: 1612-000226
+            container: CN12654
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            product:
+              nr: "40617639936"
+              barcode: barcode
+            amount: 24
+            trash_code: CV-3
+            best-before: 2000-01-23
+            j-uid: "2100000194353"
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            department:
+              id: 6
+              value: Брак на утилизацию
+        context: =login
+        department:
+        - description: Основной склад
+          id: 2
+        - description: Основной склад
+          id: 2
+      properties:
+        date:
+          description: create date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            attribute: true
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        department:
+          description: list of available departments
+          items:
+            $ref: "#/components/schemas/Movements_department_inner"
+          type: array
+          xml:
+            name: department
+        document:
+          items:
+            $ref: "#/components/schemas/Movements_document_inner"
+          type: array
+          xml:
+            name: document
+      type: object
+      xml:
+        name: export
+    Refunds:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        context: =login
+        refund:
+        - date: 2000-01-23
+          order-nr: "12474175"
+          refund-invoice-id: 2eedff6b-000f-5000-8000-17e15b0de450
+          nr: "669367"
+          sum: 699
+          type: Возврат
+          refund-content:
+          - product:
+              quantity: 2
+              nr: "326434316288"
+          - product:
+              quantity: 2
+              nr: "326434316288"
+        - date: 2000-01-23
+          order-nr: "12474175"
+          refund-invoice-id: 2eedff6b-000f-5000-8000-17e15b0de450
+          nr: "669367"
+          sum: 699
+          type: Возврат
+          refund-content:
+          - product:
+              quantity: 2
+              nr: "326434316288"
+          - product:
+              quantity: 2
+              nr: "326434316288"
+      properties:
+        date:
+          description: create datetime
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss'Z'
+          type: string
+          xml:
+            attribute: true
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        refund:
+          items:
+            $ref: "#/components/schemas/Refunds_refund_inner"
+          type: array
+      type: object
+      xml:
+        name: export
+    ProductOutgoConfirmation:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        context: =login
+        product-outgo:
+        - contractor:
+            description: Moscow Columbus - CLMB
+          invoice-nr: INV321
+          invoice-date: 2000-01-23T04:56:07.000+00:00
+          nr: "54352"
+          product-outgo-rows:
+            product-outgo-row:
+            - product:
+                nr: X001
+              document-amount: 10
+              amount: 9
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            - product:
+                nr: X001
+              document-amount: 10
+              amount: 9
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          outgo-date: 2000-01-23T04:56:07.000+00:00
+        - contractor:
+            description: Moscow Columbus - CLMB
+          invoice-nr: INV321
+          invoice-date: 2000-01-23T04:56:07.000+00:00
+          nr: "54352"
+          product-outgo-rows:
+            product-outgo-row:
+            - product:
+                nr: X001
+              document-amount: 10
+              amount: 9
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            - product:
+                nr: X001
+              document-amount: 10
+              amount: 9
+              ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          outgo-date: 2000-01-23T04:56:07.000+00:00
+      properties:
+        date:
+          description: create datetime
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+          title: create datetime
+          type: string
+          xml:
+            attribute: true
+        context:
+          description: request context
+          example: =login
+          type: string
+          xml:
+            attribute: true
+        product-outgo:
+          items:
+            $ref: "#/components/schemas/ProductOutgoConfirmationProductOutgo"
+          type: array
+      type: object
+      xml:
+        name: product-outgo-confirmation
+    ProductOutgoConfirmationProduct:
+      description: product
+      example:
+        nr: X001
+      properties:
+        nr:
+          description: product code
+          example: X001
+          type: string
+          xml:
+            attribute: true
+      type: object
+    ProductOutgoConfirmationProductOutgo:
+      description: outgo document
+      example:
+        contractor:
+          description: Moscow Columbus - CLMB
+        invoice-nr: INV321
+        invoice-date: 2000-01-23T04:56:07.000+00:00
+        nr: "54352"
+        product-outgo-rows:
+          product-outgo-row:
+          - product:
+              nr: X001
+            document-amount: 10
+            amount: 9
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          - product:
+              nr: X001
+            document-amount: 10
+            amount: 9
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        outgo-date: 2000-01-23T04:56:07.000+00:00
+      properties:
+        nr:
+          description: document number
+          example: "54352"
+          type: string
+        contractor:
+          $ref: "#/components/schemas/ProductOutgoConfirmationProductOutgo_contractor"
+        invoice-nr:
+          description: invoice number of shop order
+          example: INV321
+          type: string
+        invoice-date:
+          description: invoice date of shop order
+          format: date-time
+          pattern: yyyy-MM-dd
+          title: invoice date of shop order
+          type: string
+        outgo-date:
+          description: outgo date
+          format: date-time
+          pattern: yyyy-MM-dd
+          title: outgo date
+          type: string
+        product-outgo-rows:
+          $ref: "#/components/schemas/ProductOutgoConfirmationRows"
+      type: object
+    ProductOutgoConfirmationRow:
+      description: position
+      example:
+        product:
+          nr: X001
+        document-amount: 10
+        amount: 9
+        ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+      properties:
+        product:
+          $ref: "#/components/schemas/ProductOutgoConfirmationProduct"
+        document-amount:
+          description: document amount
+          example: 10
+          format: double
+          type: number
+          xml:
+            name: document-amount
+        amount:
+          description: amount
+          example: 9
+          format: double
+          type: number
+        ml-uid:
+          description: SGTIN part
+          example: 010464004726001021GTtMACx5gwNde240640391ffe1
+          type: string
+          xml:
+            name: ml-uid
+      type: object
+    ProductOutgoConfirmationRows:
+      description: list of positions
+      example:
+        product-outgo-row:
+        - product:
+            nr: X001
+          document-amount: 10
+          amount: 9
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        - product:
+            nr: X001
+          document-amount: 10
+          amount: 9
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+      properties:
+        product-outgo-row:
+          items:
+            $ref: "#/components/schemas/ProductOutgoConfirmationRow"
+          type: array
+      type: object
+    Services:
+      description: available services
+      enum:
+      - STOCKSTATE
+      - STOCKSTATE_SALES
+      - STOCKSTATE_CHANNEL
+      - PRODUCT_RECEIVE_CONFIRMATION
+      - ORDERSTATE
+      - ORDERSENT
+      - PAYMENTS
+      - CLAIMS
+      - RETURNS
+      - MOVEMENTS
+      - REFUNDS
+      - PRODUCT_OUTGO_CONFIRMATION
+      type: string
+    SalesChannel:
+      description: available services
+      enum:
+      - site
+      - ozon
+      - wildberries
+      - yandex
+      - megamarket
+      type: string
+      xml:
+        name: sales-channel
+    Dictionaries:
+      description: available services
+      enum:
+      - dic_nds
+      - dic_order_type
+      - dic_order_action
+      - dic_product_type
+      - dic_shipping_method
+      - dic_measurement
+      type: string
+    Dictionary:
+      example:
+        name: dic_nds
+        rows:
+        - description: 20%
+          value: "4"
+        - description: 20%
+          value: "4"
+      properties:
+        name:
+          description: dictionary name
+          example: dic_nds
+          type: string
+        rows:
+          items:
+            $ref: "#/components/schemas/Dictionary_rows_inner"
+          type: array
+          xml:
+            name: rows
+            wrapped: true
+      required:
+      - name
+      - rows
+      type: object
+      xml:
+        name: dictionary
+    ProductReceive_supplier_contractor:
+      description: contractor
+      example:
+        legal-address: legal-address
+        inn: inn
+        description: description
+        post-address: post-address
+        kpp: kpp
+        contractor-parameter:
+        - param-name: param-name
+          param-type: "0"
+          value: value
+        - param-name: param-name
+          param-type: "0"
+          value: value
+      properties:
+        description:
+          type: string
+        inn:
+          description: TIN
+          type: string
+        kpp:
+          description: KPP
+          type: string
+        legal-address:
+          description: legal address
+          type: string
+          xml:
+            name: legal-address
+        post-address:
+          description: postal address
+          type: string
+          xml:
+            name: post-address
+        contractor-parameter:
+          items:
+            $ref: "#/components/schemas/Parameter"
+          type: array
+          xml:
+            name: contractor-parameter
+      type: object
+    ProductReceive_supplier:
+      description: supplier
+      example:
+        contractor:
+          legal-address: legal-address
+          inn: inn
+          description: description
+          post-address: post-address
+          kpp: kpp
+          contractor-parameter:
+          - param-name: param-name
+            param-type: "0"
+            value: value
+          - param-name: param-name
+            param-type: "0"
+            value: value
+      properties:
+        contractor:
+          $ref: "#/components/schemas/ProductReceive_supplier_contractor"
+      type: object
+    Product_product_parameter_inner:
+      example:
+        param-name: param-name
+        param-type: "0"
+        value: value
+      properties:
+        value:
+          description: parameter value
+          type: string
+          xml:
+            attribute: true
+            name: value
+        param-name:
+          description: parameter name
+          type: string
+          xml:
+            attribute: true
+            name: param-name
+        param-type:
+          description: "parameter type (0 - boolean, 1 - number, 2 - string, 3 - date)"
+          enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          type: string
+          xml:
+            attribute: true
+            name: param-type
+      type: object
+      xml:
+        name: product-parameter
+    Product_content_inner:
+      description: complect content position
+      example:
+        quantity: 2
+        nr: nr
+      properties:
+        nr:
+          description: complect content product code
+          type: string
+          xml:
+            attribute: true
+        quantity:
+          description: complect content quantity
+          example: 2
+          format: int64
+          type: integer
+      type: object
+      xml:
+        name: product
+    BrandList_brandVariants_inner_products_inner:
+      description: product
+      example:
+        code: DK0003.01
+      properties:
+        code:
+          description: product code
+          example: DK0003.01
+          type: string
+          xml:
+            attribute: true
+            name: Code
+      type: object
+      xml:
+        name: ProductReference
+    BrandList_brandVariants_inner:
+      description: lot
+      example:
+        code: BV232
+        name: Lot name
+        alternativeName: Имя лота
+        type: type
+        products:
+        - code: DK0003.01
+        - code: DK0003.01
+      properties:
+        products:
+          description: list of contents
+          items:
+            $ref: "#/components/schemas/BrandList_brandVariants_inner_products_inner"
+          type: array
+          xml:
+            name: Products
+            wrapped: true
+        code:
+          description: lot code
+          example: BV232
+          type: string
+          xml:
+            attribute: true
+            name: Code
+        name:
+          description: lot name
+          example: Lot name
+          type: string
+          xml:
+            attribute: true
+            name: Name
+        alternativeName:
+          description: lot alternative name
+          example: Имя лота
+          type: string
+          xml:
+            attribute: true
+            name: AlternativeName
+        type:
+          description: lot type
+          type: string
+          xml:
+            attribute: true
+            name: Type
+      type: object
+      xml:
+        name: BrandVariant
+    MoveProductRequest_movement_request_inner_contractor_recipient_delivery_address_inner:
+      example:
+        type: Почтовый индекс
+        value: "101000"
+      properties:
+        type:
+          description: Field type
+          enum:
+          - Почтовый индекс
+          - Регион
+          - Населенный пункт
+          - Улица
+          - Дом
+          - Квартира
+          type: string
+        value:
+          description: field value
+          example: "101000"
+          type: string
+      type: object
+      xml:
+        name: address-field
+    MoveProductRequest_movement_request_inner_contractor_recipient:
+      example:
+        phone: "70001234567"
+        name: Фамилия Имя Отчество
+        delivery-address:
+        - type: Почтовый индекс
+          value: "101000"
+        - type: Почтовый индекс
+          value: "101000"
+      properties:
+        name:
+          description: Receiver's full name
+          example: Фамилия Имя Отчество
+          type: string
+        delivery-address:
+          description: Delivery address
+          items:
+            $ref: "#/components/schemas/MoveProductRequest_movement_request_inner_contractor_recipient_delivery_address_inner"
+          type: array
+          xml:
+            name: delivery-address
+            wrapped: true
+        phone:
+          description: Phone number
+          example: "70001234567"
+          type: string
+      type: object
+    MoveProductRequest_movement_request_inner_contractor:
+      description: Cargo receiver
+      example:
+        legal-address: legal-address
+        inn: inn
+        recipient:
+          phone: "70001234567"
+          name: Фамилия Имя Отчество
+          delivery-address:
+          - type: Почтовый индекс
+            value: "101000"
+          - type: Почтовый индекс
+            value: "101000"
+        description: ООО "АРТ Логистик"
+        post-address: post-address
+        kpp: kpp
+      properties:
+        description:
+          description: contractor name
+          example: ООО "АРТ Логистик"
+          type: string
+        inn:
+          description: TIN
+          type: string
+        kpp:
+          description: KPP
+          type: string
+        legal-address:
+          description: Legal address
+          type: string
+          xml:
+            name: legal-address
+        post-address:
+          description: Postal address
+          type: string
+          xml:
+            name: post-address
+        recipient:
+          $ref: "#/components/schemas/MoveProductRequest_movement_request_inner_contractor_recipient"
+      type: object
+    MoveProductRequest_movement_request_inner_department:
+      description: department from
+      example:
+        id: 5
+      properties:
+        id:
+          description: Department from ID (client-specific)
+          example: 5
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+      type: object
+    MoveProductRequest_movement_request_inner_department_to:
+      description: department to
+      example:
+        id: 2
+      properties:
+        id:
+          description: Warehouse to ID (client-specific)
+          example: 2
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+      type: object
+      xml:
+        name: department-to
+    MoveProductRequest_movement_request_inner_row_inner_product:
+      example:
+        nr: P123456
+      properties:
+        nr:
+          description: Product code
+          example: P123456
+          type: string
+          xml:
+            attribute: true
+      required:
+      - nr
+      type: object
+    MoveProductRequest_movement_request_inner_row_inner:
+      example:
+        container: C1
+        product:
+          nr: P123456
+        quantity: 1
+        additional-info: additional-info
+        best-before: 2000-01-23
+        sum: 2156.12
+      properties:
+        product:
+          $ref: "#/components/schemas/MoveProductRequest_movement_request_inner_row_inner_product"
+        quantity:
+          description: Product amount
+          example: 1
+          format: double
+          type: number
+        sum:
+          description: Row sum (RUR)
+          example: 2156.12
+          format: double
+          type: number
+        additional-info:
+          description: Additional information
+          type: string
+          xml:
+            name: additional-info
+        best-before:
+          description: Expiration date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            name: best-before
+        container:
+          description: Container
+          example: C1
+          type: string
+      required:
+      - product
+      - quantity
+      type: object
+    MoveProductRequest_movement_request_inner:
+      example:
+        contractor:
+          legal-address: legal-address
+          inn: inn
+          recipient:
+            phone: "70001234567"
+            name: Фамилия Имя Отчество
+            delivery-address:
+            - type: Почтовый индекс
+              value: "101000"
+            - type: Почтовый индекс
+              value: "101000"
+          description: ООО "АРТ Логистик"
+          post-address: post-address
+          kpp: kpp
+        nr: M1111-00232
+        comment: Со склада А в склад Б
+        department-to:
+          id: 2
+        row:
+        - container: C1
+          product:
+            nr: P123456
+          quantity: 1
+          additional-info: additional-info
+          best-before: 2000-01-23
+          sum: 2156.12
+        - container: C1
+          product:
+            nr: P123456
+          quantity: 1
+          additional-info: additional-info
+          best-before: 2000-01-23
+          sum: 2156.12
+        type: OUTGO
+        department:
+          id: 5
+      properties:
+        nr:
+          description: request number
+          example: M1111-00232
+          type: string
+        comment:
+          description: request comment
+          example: Со склада А в склад Б
+          type: string
+        contractor:
+          $ref: "#/components/schemas/MoveProductRequest_movement_request_inner_contractor"
+        type:
+          description: order type
+          enum:
+          - OUTGO
+          - CLEAN
+          - CORRECTION
+          - WHTOWHMOVEMENT
+          - REPACK
+          - INTERNAL
+          - INTERNAL_MP
+          type: string
+        department:
+          $ref: "#/components/schemas/MoveProductRequest_movement_request_inner_department"
+        department-to:
+          $ref: "#/components/schemas/MoveProductRequest_movement_request_inner_department_to"
+        row:
+          description: shipment positions
+          items:
+            $ref: "#/components/schemas/MoveProductRequest_movement_request_inner_row_inner"
+          type: array
+          xml:
+            name: row
+      required:
+      - nr
+      - row
+      - type
+      type: object
+      xml:
+        name: movement-request
+    OrderList_order_inner_customer_person_gender_link:
+      example:
+        href: "#m"
+      properties:
+        href:
+          description: gender value
+          enum:
+          - "#m"
+          - "#f"
+          type: string
+          xml:
+            attribute: true
+      type: object
+    OrderList_order_inner_customer_person_gender:
+      description: gender
+      example:
+        link:
+          href: "#m"
+      properties:
+        link:
+          $ref: "#/components/schemas/OrderList_order_inner_customer_person_gender_link"
+      type: object
+    OrderList_order_inner_customer_person:
+      example:
+        secondname: secondname
+        firstname: firstname
+        gender:
+          link:
+            href: "#m"
+        email: email
+        lastname: lastname
+      properties:
+        email:
+          type: string
+        firstname:
+          description: name
+          type: string
+        lastname:
+          description: lastname
+          type: string
+        secondname:
+          description: surname
+          type: string
+        gender:
+          $ref: "#/components/schemas/OrderList_order_inner_customer_person_gender"
+      required:
+      - lastname
+      type: object
+    OrderList_order_inner_customer:
+      example:
+        area: Ярославский
+        region-part: "7600"
+        region-code: 76
+        nr: CUST123
+        additional: additional
+        index: "150000"
+        _settlement: Ярославль
+        house: "3"
+        building: "2"
+        phone:
+        - phone
+        - phone
+        person:
+          secondname: secondname
+          firstname: firstname
+          gender:
+            link:
+              href: "#m"
+          email: email
+          lastname: lastname
+        street: street
+        construction: "1"
+        region: Ярославская обл.
+        apartment: "4"
+      properties:
+        additional:
+          description: additional address info
+          type: string
+        apartment:
+          description: flat/apartment
+          example: "4"
+          type: string
+        area:
+          description: sub-region
+          example: Ярославский
+          type: string
+        building:
+          description: house building
+          example: "2"
+          type: string
+        construction:
+          description: house construction
+          example: "1"
+          type: string
+        house:
+          description: house number
+          example: "3"
+          type: string
+        index:
+          description: zipcode
+          example: "150000"
+          type: string
+        person:
+          $ref: "#/components/schemas/OrderList_order_inner_customer_person"
+        phone:
+          description: list of phone numbers
+          items:
+            description: phone number
+            type: string
+            xml:
+              name: phone-number
+          type: array
+          xml:
+            name: phone
+            wrapped: true
+        region:
+          description: region
+          example: Ярославская обл.
+          type: string
+        region-part:
+          description: specific region code
+          example: "7600"
+          type: string
+          xml:
+            name: region-part
+        region-code:
+          description: region code
+          example: 76
+          type: integer
+          xml:
+            name: region-code
+        _settlement:
+          description: settlement name
+          example: Ярославль
+          type: string
+          xml:
+            name: settlement
+        street:
+          example: street
+          type: string
+        nr:
+          description: unique customer number
+          example: CUST123
+          type: string
+          xml:
+            attribute: true
+      required:
+      - nr
+      - person
+      type: object
+    OrderList_order_inner_doc_parameter_inner:
+      example:
+        param-name: param-name
+        param-type: "0"
+        value: value
+      properties:
+        value:
+          description: parameter value
+          type: string
+          xml:
+            attribute: true
+            name: value
+        param-name:
+          description: parameter name
+          type: string
+          xml:
+            attribute: true
+            name: param-name
+        param-type:
+          description: "parameter type (0 - boolean, 1 - number, 2 - string, 3 - date)"
+          enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          type: string
+          xml:
+            attribute: true
+            name: param-type
+      type: object
+      xml:
+        name: doc-parameter
+    OrderList_order_inner_shipping_method:
+      example:
+        postamat-nr: postamat-nr
+        link: ""
+      properties:
+        link:
+          allOf:
+          - $ref: "#/components/schemas/Link"
+          description: link to dictionary 'dic_shipping_method' value
+        postamat-nr:
+          type: string
+          xml:
+            name: postamat-nr
+      required:
+      - link
+      type: object
+    OrderList_order_inner_order_rows_inner_product:
+      example:
+        nr: nr
+      properties:
+        nr:
+          type: string
+          xml:
+            attribute: true
+      type: object
+    OrderList_order_inner_order_rows_inner_swap:
+      description: product to be picked up from customer
+      example:
+        swap-material: swap-material
+        swap-serial: swap-serial
+      properties:
+        swap-serial:
+          description: serial number of the product
+          type: string
+          xml:
+            name: swap-serial
+        swap-material:
+          description: code of the product
+          type: string
+          xml:
+            name: swap-material
+      required:
+      - swap-material
+      type: object
+    OrderList_order_inner_order_rows_inner:
+      example:
+        gross-price: 7.061401241503109
+        amount: 6.027456183070403
+        net-price: 2.3021358869347655
+        product:
+          nr: nr
+        coupon: coupon
+        swap:
+          swap-material: swap-material
+          swap-serial: swap-serial
+        item-number: 5
+        is-rent: true
+        nds-sum: 5.637376656633329
+        discount: 1.4658129805029452
+        sum: 2.027123023002322
+        measurement: ""
+        total: 9.301444243932576
+        free-product: true
+        reference-item-number: 3
+        price: 4.145608029883936
+        comment: comment
+      properties:
+        amount:
+          description: product quantity
+          format: double
+          type: number
+        coupon:
+          description: discount coupon
+          type: string
+        comment:
+          type: string
+        discount:
+          description: discount amount
+          format: double
+          type: number
+        free-product:
+          description: position is for free
+          type: boolean
+          xml:
+            name: free-product
+        is-rent:
+          description: position is for rent
+          type: boolean
+          xml:
+            name: is-rent
+        item-number:
+          description: position number
+          type: integer
+          xml:
+            name: item-number
+        measurement:
+          allOf:
+          - $ref: "#/components/schemas/Href"
+          description: link to dictionary 'dic_measurement' value
+        nds-sum:
+          description: NDS sum
+          format: double
+          type: number
+          xml:
+            name: nds-sum
+        net-price:
+          description: proceeds
+          format: double
+          type: number
+          xml:
+            name: net-price
+        gross-price:
+          description: "the same as 'price', deprecated parameter"
+          format: double
+          type: number
+          xml:
+            name: gross-price
+        total:
+          description: "the same as 'sum', deprecated parameter"
+          format: double
+          type: number
+        product:
+          $ref: "#/components/schemas/OrderList_order_inner_order_rows_inner_product"
+        reference-item-number:
+          description: referenced position number
+          type: integer
+          xml:
+            name: reference-item-number
+        sum:
+          description: total sum
+          format: double
+          type: number
+        price:
+          description: price
+          format: double
+          type: number
+        swap:
+          $ref: "#/components/schemas/OrderList_order_inner_order_rows_inner_swap"
+      required:
+      - amount
+      - product
+      type: object
+      xml:
+        name: order-row
+    OrderList_order_inner:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        order-reason: order-reason
+        nr: nr
+        shipping-cost: 0.8008281904610115
+        action: ""
+        doc-parameter:
+        - param-name: param-name
+          param-type: "0"
+          value: value
+        - param-name: param-name
+          param-type: "0"
+          value: value
+        type: ""
+        sales-channel: site
+        order-rows:
+        - gross-price: 7.061401241503109
+          amount: 6.027456183070403
+          net-price: 2.3021358869347655
+          product:
+            nr: nr
+          coupon: coupon
+          swap:
+            swap-material: swap-material
+            swap-serial: swap-serial
+          item-number: 5
+          is-rent: true
+          nds-sum: 5.637376656633329
+          discount: 1.4658129805029452
+          sum: 2.027123023002322
+          measurement: ""
+          total: 9.301444243932576
+          free-product: true
+          reference-item-number: 3
+          price: 4.145608029883936
+          comment: comment
+        - gross-price: 7.061401241503109
+          amount: 6.027456183070403
+          net-price: 2.3021358869347655
+          product:
+            nr: nr
+          coupon: coupon
+          swap:
+            swap-material: swap-material
+            swap-serial: swap-serial
+          item-number: 5
+          is-rent: true
+          nds-sum: 5.637376656633329
+          discount: 1.4658129805029452
+          sum: 2.027123023002322
+          measurement: ""
+          total: 9.301444243932576
+          free-product: true
+          reference-item-number: 3
+          price: 4.145608029883936
+          comment: comment
+        shipping-method:
+          postamat-nr: postamat-nr
+          link: ""
+        customer:
+          area: Ярославский
+          region-part: "7600"
+          region-code: 76
+          nr: CUST123
+          additional: additional
+          index: "150000"
+          _settlement: Ярославль
+          house: "3"
+          building: "2"
+          phone:
+          - phone
+          - phone
+          person:
+            secondname: secondname
+            firstname: firstname
+            gender:
+              link:
+                href: "#m"
+            email: email
+            lastname: lastname
+          street: street
+          construction: "1"
+          region: Ярославская обл.
+          apartment: "4"
+      properties:
+        type:
+          allOf:
+          - $ref: "#/components/schemas/Href"
+          description: link to dictionary 'dic_order_type' value
+        action:
+          allOf:
+          - $ref: "#/components/schemas/Href"
+          description: link to dictionary 'dic_order_action' value
+        sales-channel:
+          $ref: "#/components/schemas/SalesChannel"
+        customer:
+          $ref: "#/components/schemas/OrderList_order_inner_customer"
+        order-reason:
+          description: client-specific order reason
+          type: string
+          xml:
+            name: order-reason
+        shipping-cost:
+          description: cost of order delivery
+          format: double
+          type: number
+          xml:
+            name: shipping-cost
+        doc-parameter:
+          description: list of optional order parameters
+          items:
+            $ref: "#/components/schemas/OrderList_order_inner_doc_parameter_inner"
+          type: array
+          xml:
+            name: doc-parameter
+        date:
+          description: date
+          format: date-time
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            attribute: true
+        nr:
+          description: order number
+          type: string
+          xml:
+            attribute: true
+        shipping-method:
+          $ref: "#/components/schemas/OrderList_order_inner_shipping_method"
+        order-rows:
+          items:
+            $ref: "#/components/schemas/OrderList_order_inner_order_rows_inner"
+          type: array
+          xml:
+            name: order-rows
+            wrapped: true
+      required:
+      - action
+      - customer
+      - nr
+      - order-rows
+      - shipping-method
+      - type
+      type: object
+      xml:
+        name: order
+    ProductReceiveConfirmationProductReceive_supplier_contractor:
+      description: contractor
+      example:
+        supplier-id: SupplId
+      properties:
+        supplier-id:
+          description: external supplier id
+          example: SupplId
+          type: string
+      type: object
+    ProductReceiveConfirmationProductReceive_supplier:
+      description: supplier
+      example:
+        contractor:
+          supplier-id: SupplId
+      properties:
+        contractor:
+          $ref: "#/components/schemas/ProductReceiveConfirmationProductReceive_supplier_contractor"
+      type: object
+    OrderState_order_inner_rows_inner_product:
+      description: product
+      example:
+        nr: B1
+      properties:
+        nr:
+          description: product code
+          example: B1
+          type: string
+          xml:
+            attribute: true
+      type: object
+    OrderState_order_inner_rows_inner:
+      description: order row
+      example:
+        lock-reason: Нет в наличии
+        product:
+          nr: B1
+        amount: 0.8008281904610115
+      properties:
+        product:
+          $ref: "#/components/schemas/OrderState_order_inner_rows_inner_product"
+        amount:
+          description: amount
+          format: double
+          type: number
+        lock-reason:
+          description: order row lock reason
+          example: Нет в наличии
+          type: string
+      type: object
+      xml:
+        name: row
+    OrderState_order_inner:
+      example:
+        status-date: 2000-01-23T04:56:07.000+00:00
+        nr: d100029794
+        storno-reason: По просьбе заказчика
+        rows:
+        - lock-reason: Нет в наличии
+          product:
+            nr: B1
+          amount: 0.8008281904610115
+        - lock-reason: Нет в наличии
+          product:
+            nr: B1
+          amount: 0.8008281904610115
+        status: ORDER_RECEIVED
+        tracking-number: "5453266426"
+      properties:
+        nr:
+          description: customer order number
+          example: d100029794
+          type: string
+          xml:
+            attribute: true
+        status:
+          description: current order state
+          enum:
+          - ORDER_RECEIVED
+          - FULFILLMENT_STARTED
+          - SCANNED
+          - STORNED
+          - LOCKED
+          - UNLOCKED
+          - SHIPPED
+          - ARRIVED
+          - DELIVERED
+          - RETURNED
+          - COURIER_ASSIGNED
+          - REFUSED
+          - CANCELLED
+          - ERROR_ORDER
+          type: string
+        status-date:
+          description: create date
+          format: date-time
+          pattern: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+          type: string
+          xml:
+            name: status-date
+        tracking-number:
+          description: tracking number
+          example: "5453266426"
+          type: string
+        storno-reason:
+          description: order storno reason
+          example: По просьбе заказчика
+          type: string
+        rows:
+          description: order rows
+          items:
+            $ref: "#/components/schemas/OrderState_order_inner_rows_inner"
+          type: array
+          xml:
+            name: rows
+            wrapped: true
+      required:
+      - nr
+      - status
+      type: object
+      xml:
+        name: order
+    Payments_payment_inner_parcel_product_inner:
+      example:
+        amount: 1
+        nr: nr
+        sum: 123.45
+      properties:
+        nr:
+          description: material number
+          type: string
+        amount:
+          description: parcel line quantity
+          example: 1
+          format: double
+          minimum: 1
+          type: number
+        sum:
+          description: parcel line sum
+          example: 123.45
+          format: double
+          type: number
+      required:
+      - amount
+      - nr
+      - sum
+      type: object
+    Payments_payment_inner_parcel:
+      description: parcel
+      example:
+        order-nr: order-nr
+        product:
+        - amount: 1
+          nr: nr
+          sum: 123.45
+        - amount: 1
+          nr: nr
+          sum: 123.45
+        nr: nr
+        invoiceId: invoiceId
+      properties:
+        nr:
+          description: tracking number
+          type: string
+          xml:
+            attribute: true
+        order-nr:
+          description: order number
+          type: string
+          xml:
+            attribute: true
+        invoiceId:
+          description: online payment number
+          type: string
+        product:
+          items:
+            $ref: "#/components/schemas/Payments_payment_inner_parcel_product_inner"
+          type: array
+      required:
+      - nr
+      - order-nr
+      - product
+      type: object
+    Payments_payment_inner:
+      example:
+        date: 2000-01-23
+        parcel:
+          order-nr: order-nr
+          product:
+          - amount: 1
+            nr: nr
+            sum: 123.45
+          - amount: 1
+            nr: nr
+            sum: 123.45
+          nr: nr
+          invoiceId: invoiceId
+        nr: nr
+        sum: 123.45
+      properties:
+        nr:
+          type: string
+          xml:
+            attribute: true
+        date:
+          description: payment date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+        sum:
+          description: payment sum
+          example: 123.45
+          format: double
+          type: number
+        parcel:
+          $ref: "#/components/schemas/Payments_payment_inner_parcel"
+      required:
+      - date
+      - nr
+      - parcel
+      - sum
+      type: object
+      xml:
+        name: payment
+    OrderSent_order_inner_shipping_method:
+      example:
+        link: ""
+        type_of_delivery: Почта России
+      properties:
+        type_of_delivery:
+          description: shipping type description
+          example: Почта России
+          type: string
+          xml:
+            attribute: true
+        link:
+          allOf:
+          - $ref: "#/components/schemas/Link"
+          description: link to dictionary 'dic_shipping_method' value
+      type: object
+      xml:
+        name: shipping-method
+    OrderSent_order_inner_parcel_row_inner_product_product_parameter:
+      example:
+        param-name: product-size
+        param-type: "2"
+        value: "48"
+      properties:
+        param-name:
+          description: parameter name
+          enum:
+          - product-size
+          example: product-size
+          type: string
+          xml:
+            attribute: true
+        param-type:
+          description: "parameter type (0 - boolean, 1 - number, 2 - string, 3 - date)"
+          enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          example: "2"
+          type: string
+          xml:
+            attribute: true
+        value:
+          example: "48"
+          type: string
+          xml:
+            name: value
+      type: object
+    OrderSent_order_inner_parcel_row_inner_product:
+      example:
+        product-parameter:
+          param-name: product-size
+          param-type: "2"
+          value: "48"
+        nr: X001
+      properties:
+        nr:
+          example: X001
+          type: string
+          xml:
+            attribute: true
+        product-parameter:
+          $ref: "#/components/schemas/OrderSent_order_inner_parcel_row_inner_product_product_parameter"
+      type: object
+    OrderSent_order_inner_parcel_row_inner:
+      example:
+        invoice-nr: 2103-111111
+        ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+        product:
+          product-parameter:
+            param-name: product-size
+            param-type: "2"
+            value: "48"
+          nr: X001
+        amount: 2
+        price: 399
+        best-before: 2000-01-23
+        j-uid: "2000000073950000"
+        sum: 600
+        ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+      properties:
+        product:
+          $ref: "#/components/schemas/OrderSent_order_inner_parcel_row_inner_product"
+        amount:
+          description: amount in parcel
+          example: 2
+          type: integer
+        sum:
+          description: row sum
+          example: 600
+          format: double
+          type: number
+        price:
+          description: product price
+          example: 399
+          format: double
+          type: number
+        invoice-nr:
+          description: consignment
+          example: 2103-111111
+          type: string
+          xml:
+            name: invoice-nr
+        ml-uid:
+          description: SGTIN part
+          example: 010464004726001021GTtMACx5gwNde240640391ffe1
+          type: string
+          xml:
+            name: ml-uid
+        ml-uid-full:
+          description: full marking code
+          example: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          type: string
+          xml:
+            name: ml-uid-full
+        best-before:
+          description: expiration date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            name: best-before
+        j-uid:
+          description: jewelry unique code
+          example: "2000000073950000"
+          type: string
+          xml:
+            name: j-uid
+      type: object
+      xml:
+        name: row
+    OrderSent_order_inner_parcel:
+      example:
+        nr: XX123-456
+        shipped-date: 2000-01-23T04:56:07.000+00:00
+        weight: 1260
+        air-rate: 253.65
+        return-barcode: "012345678910"
+        row:
+        - invoice-nr: 2103-111111
+          ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          product:
+            product-parameter:
+              param-name: product-size
+              param-type: "2"
+              value: "48"
+            nr: X001
+          amount: 2
+          price: 399
+          best-before: 2000-01-23
+          j-uid: "2000000073950000"
+          sum: 600
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        - invoice-nr: 2103-111111
+          ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          product:
+            product-parameter:
+              param-name: product-size
+              param-type: "2"
+              value: "48"
+            nr: X001
+          amount: 2
+          price: 399
+          best-before: 2000-01-23
+          j-uid: "2000000073950000"
+          sum: 600
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        shipping-rate: 160
+        insurance-rate: 18.1
+      properties:
+        nr:
+          description: parcel tracking number
+          example: XX123-456
+          type: string
+          xml:
+            attribute: true
+        shipped-date:
+          description: shipping date
+          format: date-time
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            name: shipped-date
+        weight:
+          description: parcel weight (gr)
+          example: 1260
+          format: int64
+          type: integer
+        shipping-rate:
+          description: shipping fee
+          example: 160
+          format: double
+          type: number
+          xml:
+            name: shipping-rate
+        insurance-rate:
+          description: insurance fee
+          example: 18.1
+          format: double
+          type: number
+          xml:
+            name: insurance-rate
+        air-rate:
+          description: avia fee
+          example: 253.65
+          format: double
+          type: number
+          xml:
+            name: air-rate
+        return-barcode:
+          description: simple return barcode
+          example: "012345678910"
+          type: string
+          xml:
+            name: return-barcode
+        row:
+          items:
+            $ref: "#/components/schemas/OrderSent_order_inner_parcel_row_inner"
+          type: array
+          xml:
+            name: rows
+            wrapped: true
+      type: object
+    OrderSent_order_inner:
+      example:
+        parcel:
+          nr: XX123-456
+          shipped-date: 2000-01-23T04:56:07.000+00:00
+          weight: 1260
+          air-rate: 253.65
+          return-barcode: "012345678910"
+          row:
+          - invoice-nr: 2103-111111
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            product:
+              product-parameter:
+                param-name: product-size
+                param-type: "2"
+                value: "48"
+              nr: X001
+            amount: 2
+            price: 399
+            best-before: 2000-01-23
+            j-uid: "2000000073950000"
+            sum: 600
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          - invoice-nr: 2103-111111
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            product:
+              product-parameter:
+                param-name: product-size
+                param-type: "2"
+                value: "48"
+              nr: X001
+            amount: 2
+            price: 399
+            best-before: 2000-01-23
+            j-uid: "2000000073950000"
+            sum: 600
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          shipping-rate: 160
+          insurance-rate: 18.1
+        nr: ORD0000023
+        shipping-method:
+          link: ""
+          type_of_delivery: Почта России
+      properties:
+        nr:
+          description: order number
+          example: ORD0000023
+          type: string
+          xml:
+            attribute: true
+        shipping-method:
+          $ref: "#/components/schemas/OrderSent_order_inner_shipping_method"
+        parcel:
+          $ref: "#/components/schemas/OrderSent_order_inner_parcel"
+      required:
+      - nr
+      type: object
+      xml:
+        name: order
+    Returns_return_inner_parcel:
+      description: parcel sent
+      example:
+        order-nr: "212323656"
+        nr: "00000755129858"
+      properties:
+        nr:
+          description: tracking number
+          example: "00000755129858"
+          type: string
+          xml:
+            attribute: true
+        order-nr:
+          description: customer order number
+          example: "212323656"
+          type: string
+          xml:
+            attribute: true
+            name: order-nr
+      required:
+      - nr
+      type: object
+    Returns_return_inner_return_content_inner:
+      example:
+        invoice-nr: "162784"
+        ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+        nr: P123456
+        best-before: 2000-01-23
+        j-uid: "1034004000062"
+        defective: PV-12
+        ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        sum: 699
+      properties:
+        nr:
+          description: product code
+          example: P123456
+          type: string
+          xml:
+            attribute: true
+        defective:
+          description: product defect code
+          example: PV-12
+          type: string
+        invoice-nr:
+          description: consignment
+          example: "162784"
+          type: string
+        ml-uid:
+          description: SGTIN part
+          example: 010464004726001021GTtMACx5gwNde240640391ffe1
+          type: string
+          xml:
+            name: ml-uid
+        ml-uid-full:
+          description: full marking code
+          example: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          type: string
+          xml:
+            name: ml-uid-full
+        best-before:
+          description: expiration date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            name: best-before
+        j-uid:
+          description: jewelry unique code
+          example: "1034004000062"
+          type: string
+          xml:
+            name: j-uid
+        sum:
+          description: row sum (RUR)
+          example: 699
+          format: double
+          type: number
+      required:
+      - nr
+      type: object
+      xml:
+        name: product
+    Returns_return_inner:
+      example:
+        date: 2000-01-23
+        reason: Истечение срока хранения
+        parcel:
+          order-nr: "212323656"
+          nr: "00000755129858"
+        document:
+          date: 2000-01-23
+          invoice-date: 2000-01-23
+          scan-date: 2000-01-23
+          nr: "430068"
+          invoice-number: "1509615600016875"
+        return-rate: 418.8
+        id: "71466074"
+        return-content:
+        - invoice-nr: "162784"
+          ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          nr: P123456
+          best-before: 2000-01-23
+          j-uid: "1034004000062"
+          defective: PV-12
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          sum: 699
+        - invoice-nr: "162784"
+          ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          nr: P123456
+          best-before: 2000-01-23
+          j-uid: "1034004000062"
+          defective: PV-12
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          sum: 699
+      properties:
+        id:
+          description: ART Logistik's internal unique identifier
+          example: "71466074"
+          type: string
+          xml:
+            attribute: true
+        parcel:
+          $ref: "#/components/schemas/Returns_return_inner_parcel"
+        document:
+          $ref: "#/components/schemas/ReturnDocument"
+        date:
+          description: date of return document
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            attribute: true
+        reason:
+          description: return reason
+          example: Истечение срока хранения
+          type: string
+        return-rate:
+          description: tariff for return
+          example: 418.8
+          format: double
+          type: number
+          xml:
+            name: return-rate
+        return-content:
+          items:
+            $ref: "#/components/schemas/Returns_return_inner_return_content_inner"
+          type: array
+          xml:
+            name: return-content
+            wrapped: true
+      required:
+      - id
+      - parcel
+      - reason
+      type: object
+      xml:
+        name: return
+    Claims_claim_inner_customer:
+      example:
+        nr: "058926"
+      properties:
+        nr:
+          description: customer number
+          example: "058926"
+          type: string
+          xml:
+            attribute: true
+      type: object
+    Claims_claim_inner_claim_content_inner_product:
+      example:
+        invoice-nr: "162784"
+        ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+        nr: "326434316288"
+        best-before: 2000-01-23
+        j-uid: "1034004000062"
+        ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        sum: 699
+      properties:
+        nr:
+          description: product code
+          example: "326434316288"
+          type: string
+          xml:
+            attribute: true
+        invoice-nr:
+          description: consignment
+          example: "162784"
+          type: string
+        ml-uid:
+          description: SGTIN part
+          example: 010464004726001021GTtMACx5gwNde240640391ffe1
+          type: string
+          xml:
+            name: ml-uid
+        ml-uid-full:
+          description: full marking code
+          example: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          type: string
+          xml:
+            name: ml-uid-full
+        best-before:
+          description: expiration date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            name: best-before
+        j-uid:
+          description: jewelry unique code
+          example: "1034004000062"
+          type: string
+          xml:
+            name: j-uid
+        sum:
+          description: row sum (RUR)
+          example: 699
+          format: double
+          type: number
+      required:
+      - nr
+      type: object
+      xml:
+        name: product
+    Claims_claim_inner_claim_content_inner:
+      example:
+        reason: 5. Не подошел по размеру
+        product:
+          invoice-nr: "162784"
+          ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          nr: "326434316288"
+          best-before: 2000-01-23
+          j-uid: "1034004000062"
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          sum: 699
+        defective: true
+        defect-reason: 1. Брак
+        requirement: 2. Возврат денег
+      properties:
+        product:
+          $ref: "#/components/schemas/Claims_claim_inner_claim_content_inner_product"
+        reason:
+          description: position's return reason
+          example: 5. Не подошел по размеру
+          type: string
+        requirement:
+          description: position's claim type as customer said
+          example: 2. Возврат денег
+          type: string
+        defect-reason:
+          description: defect reason as customer said
+          example: 1. Брак
+          type: string
+          xml:
+            name: defect-reason
+        defective:
+          description: defect check result
+          type: boolean
+      required:
+      - product
+      type: object
+    Claims_claim_inner:
+      example:
+        date: 2000-01-23
+        parcel-nr: "32882237"
+        reason: Возврат клиентом рекламация
+        order-nr: "12474175"
+        nr: "669367"
+        income-parcel-nr: "19201217050453"
+        document:
+          date: 2000-01-23
+          invoice-date: 2000-01-23
+          scan-date: 2000-01-23
+          nr: "430068"
+          invoice-number: "1509615600016875"
+        additional-reason: Без возвратной формы
+        requirement: Отказ от получения
+        claim-content:
+        - reason: 5. Не подошел по размеру
+          product:
+            invoice-nr: "162784"
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            nr: "326434316288"
+            best-before: 2000-01-23
+            j-uid: "1034004000062"
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            sum: 699
+          defective: true
+          defect-reason: 1. Брак
+          requirement: 2. Возврат денег
+        - reason: 5. Не подошел по размеру
+          product:
+            invoice-nr: "162784"
+            ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+            nr: "326434316288"
+            best-before: 2000-01-23
+            j-uid: "1034004000062"
+            ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+            sum: 699
+          defective: true
+          defect-reason: 1. Брак
+          requirement: 2. Возврат денег
+        customer:
+          nr: "058926"
+      properties:
+        income-parcel-nr:
+          description: incoming parcel number
+          example: "19201217050453"
+          type: string
+          xml:
+            attribute: true
+            name: income-parcel-nr
+        nr:
+          description: claim number
+          example: "669367"
+          type: string
+          xml:
+            attribute: true
+            name: nr
+        order-nr:
+          description: customer order number
+          example: "12474175"
+          type: string
+          xml:
+            attribute: true
+            name: order-nr
+        parcel-nr:
+          description: sent parcel tracking number
+          example: "32882237"
+          type: string
+          xml:
+            attribute: true
+            name: parcel-nr
+        document:
+          $ref: "#/components/schemas/ReturnDocument"
+        customer:
+          $ref: "#/components/schemas/Claims_claim_inner_customer"
+        date:
+          description: date of return document
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+        reason:
+          description: global claim reason
+          example: Возврат клиентом рекламация
+          type: string
+        requirement:
+          description: customer request
+          example: Отказ от получения
+          type: string
+        additional-reason:
+          description: return request absense
+          example: Без возвратной формы
+          type: string
+        claim-content:
+          description: claim content
+          items:
+            $ref: "#/components/schemas/Claims_claim_inner_claim_content_inner"
+          type: array
+          xml:
+            name: claim-content
+      required:
+      - claim-content
+      - customer
+      - nr
+      type: object
+      xml:
+        name: claim
+    Movements_department_inner:
+      example:
+        description: Основной склад
+        id: 2
+      properties:
+        id:
+          description: internal identifier
+          example: 2
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+        description:
+          description: department description
+          example: Основной склад
+          type: string
+          xml:
+            attribute: true
+      required:
+      - description
+      - id
+      type: object
+      xml:
+        name: department
+    Movements_document_inner_basis_document:
+      example:
+        nr: B2108-00007
+        id: 9912267
+      properties:
+        id:
+          description: internal identifier
+          example: 9912267
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+        nr:
+          description: document number
+          example: B2108-00007
+          type: string
+          xml:
+            attribute: true
+      type: object
+    Movements_document_inner_basis:
+      description: basis document
+      example:
+        document:
+          nr: B2108-00007
+          id: 9912267
+      properties:
+        document:
+          $ref: "#/components/schemas/Movements_document_inner_basis_document"
+      type: object
+    Movements_document_inner_contractor:
+      description: supplier
+      example:
+        inn: "7700000000"
+        description: ООО "ООО"
+        id: "9999"
+      properties:
+        id:
+          description: internal identifier
+          example: "9999"
+          type: string
+        description:
+          description: contractor name
+          example: ООО "ООО"
+          type: string
+        inn:
+          description: TIN
+          example: "7700000000"
+          type: string
+      type: object
+    Movements_document_inner_movement_inner_product:
+      example:
+        nr: "40617639936"
+        barcode: barcode
+      properties:
+        nr:
+          description: product code
+          example: "40617639936"
+          type: string
+          xml:
+            attribute: true
+        barcode:
+          type: string
+          xml:
+            attribute: true
+          example: null
+      required:
+      - nr
+      type: object
+    Movements_document_inner_movement_inner_department:
+      description: department
+      example:
+        id: 6
+        value: Брак на утилизацию
+      properties:
+        id:
+          description: internal identifier
+          example: 6
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+        value:
+          description: place
+          example: Брак на утилизацию
+          type: string
+      required:
+      - id
+      type: object
+    Movements_document_inner_movement_inner:
+      example:
+        invoice-nr: 1612-000226
+        container: CN12654
+        ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+        product:
+          nr: "40617639936"
+          barcode: barcode
+        amount: 24
+        trash_code: CV-3
+        best-before: 2000-01-23
+        j-uid: "2100000194353"
+        ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+        department:
+          id: 6
+          value: Брак на утилизацию
+      properties:
+        product:
+          $ref: "#/components/schemas/Movements_document_inner_movement_inner_product"
+        amount:
+          description: product amount (positive or negative value)
+          example: 24
+          format: int64
+          type: integer
+        department:
+          $ref: "#/components/schemas/Movements_document_inner_movement_inner_department"
+        invoice-nr:
+          description: consignment
+          example: 1612-000226
+          type: string
+        best-before:
+          description: best before
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            name: best-before
+        trash_code:
+          description: product defect code
+          example: CV-3
+          type: string
+        container:
+          description: pallet number
+          example: CN12654
+          type: string
+        ml-uid:
+          description: SGTIN part
+          example: 010464004726001021GTtMACx5gwNde240640391ffe1
+          type: string
+        ml-uid-full:
+          description: full marking code
+          example: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          type: string
+          xml:
+            name: ml-uid-full
+        j-uid:
+          description: jewelry unique code
+          example: "2100000194353"
+          type: string
+      required:
+      - amount
+      - department
+      - product
+      type: object
+      xml:
+        name: movement
+    Movements_document_inner:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        invoice-nr: "2826"
+        invoice-date: 2000-01-23
+        contractor:
+          inn: "7700000000"
+          description: ООО "ООО"
+          id: "9999"
+        nr: "115209"
+        comment: №14-05-0585
+        id: 9912218
+        type: combine-kit
+        basis:
+          document:
+            nr: B2108-00007
+            id: 9912267
+        movement:
+        - invoice-nr: 1612-000226
+          container: CN12654
+          ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          product:
+            nr: "40617639936"
+            barcode: barcode
+          amount: 24
+          trash_code: CV-3
+          best-before: 2000-01-23
+          j-uid: "2100000194353"
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          department:
+            id: 6
+            value: Брак на утилизацию
+        - invoice-nr: 1612-000226
+          container: CN12654
+          ml-uid-full: 010464004726001021GTtMACx5gwNde240640391ffe191xx
+          product:
+            nr: "40617639936"
+            barcode: barcode
+          amount: 24
+          trash_code: CV-3
+          best-before: 2000-01-23
+          j-uid: "2100000194353"
+          ml-uid: 010464004726001021GTtMACx5gwNde240640391ffe1
+          department:
+            id: 6
+            value: Брак на утилизацию
+      properties:
+        id:
+          description: internal identifier
+          example: 9912218
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+        type:
+          description: combine-kit Сборка комплекта;<br/> defect-cancel Прекращение
+            брака товара;<br/>            inventory Инвентаризация;<br/> mission Задание
+            на перемещение;<br/> product-clean Акт списания товара;<br/> product-correction
+            Коррекция ТМЦ;<br/> product-defect Перемещение в брак;<br/> product-defect-outgo
+            Отправка брака;<br/> product-movement Перемещение ТМЦ;<br/> production-order
+            Заказ на отгрузку;<br/> product-outgo Отгрузка ТМЦ;<br/> product-receive
+            Приход ТМЦ;<br/> product-return Возврат продукции;<br/> request-confirmation
+            Подтверждение запроса (аналогично product-movement);<br/> uncombine-kit
+            Разборка комплекта;<br/>
+          enum:
+          - combine-kit
+          - defect-cancel
+          - inventory
+          - mission
+          - product-clean
+          - product-correction
+          - product-defect
+          - product-defect-outgo
+          - product-movement
+          - production-order
+          - product-outgo
+          - product-receive
+          - product-return
+          - request-confirmation
+          - uncombine-kit
+          type: string
+          xml:
+            attribute: true
+        nr:
+          description: document number
+          example: "115209"
+          type: string
+          xml:
+            attribute: true
+        date:
+          format: date-time
+          pattern: yyyy-MM-dd H:mm:ss
+          type: string
+          xml:
+            attribute: true
+        invoice-nr:
+          description: invoice number
+          example: "2826"
+          type: string
+          xml:
+            attribute: true
+            name: invoice-nr
+        invoice-date:
+          description: invoice date
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+          xml:
+            attribute: true
+            name: invoice-date
+        basis:
+          $ref: "#/components/schemas/Movements_document_inner_basis"
+        contractor:
+          $ref: "#/components/schemas/Movements_document_inner_contractor"
+        comment:
+          description: document commentary
+          example: №14-05-0585
+          type: string
+        movement:
+          items:
+            $ref: "#/components/schemas/Movements_document_inner_movement_inner"
+          type: array
+          xml:
+            name: movement
+      required:
+      - date
+      - id
+      - nr
+      - type
+      type: object
+      xml:
+        name: document
+    Refunds_refund_inner_refund_content_inner_product:
+      example:
+        quantity: 2
+        nr: "326434316288"
+      properties:
+        nr:
+          description: product code
+          example: "326434316288"
+          type: string
+          xml:
+            attribute: true
+        quantity:
+          description: product quantity
+          example: 2
+          format: int64
+          type: integer
+      required:
+      - nr
+      type: object
+      xml:
+        name: product
+    Refunds_refund_inner_refund_content_inner:
+      example:
+        product:
+          quantity: 2
+          nr: "326434316288"
+      properties:
+        product:
+          $ref: "#/components/schemas/Refunds_refund_inner_refund_content_inner_product"
+      required:
+      - product
+      type: object
+    Refunds_refund_inner:
+      example:
+        date: 2000-01-23
+        order-nr: "12474175"
+        refund-invoice-id: 2eedff6b-000f-5000-8000-17e15b0de450
+        nr: "669367"
+        sum: 699
+        type: Возврат
+        refund-content:
+        - product:
+            quantity: 2
+            nr: "326434316288"
+        - product:
+            quantity: 2
+            nr: "326434316288"
+      properties:
+        nr:
+          description: refund number
+          example: "669367"
+          type: string
+          xml:
+            attribute: true
+            name: nr
+        order-nr:
+          description: customer order number
+          example: "12474175"
+          type: string
+          xml:
+            attribute: true
+            name: order-nr
+        date:
+          description: date of refund
+          format: date
+          pattern: yyyy-MM-dd
+          type: string
+        refund-invoice-id:
+          description: refund invoice number
+          example: 2eedff6b-000f-5000-8000-17e15b0de450
+          type: string
+        sum:
+          description: total refund sum (RUR)
+          example: 699
+          format: double
+          type: number
+        type:
+          description: refund type
+          example: Возврат
+          type: string
+        refund-content:
+          description: refund content
+          items:
+            $ref: "#/components/schemas/Refunds_refund_inner_refund_content_inner"
+          type: array
+          xml:
+            name: refund-content
+      required:
+      - nr
+      type: object
+      xml:
+        name: refund
+    ProductOutgoConfirmationProductOutgo_contractor:
+      description: Cargo receiver
+      example:
+        description: Moscow Columbus - CLMB
+      properties:
+        description:
+          description: contractor name
+          example: Moscow Columbus - CLMB
+          type: string
+      type: object
+    Dictionary_rows_inner:
+      example:
+        description: 20%
+        value: "4"
+      properties:
+        value:
+          description: unique dictionary value
+          example: "4"
+          type: string
+        description:
+          description: description
+          example: 20%
+          type: string
+      required:
+      - description
+      - value
+      type: object
+      xml:
+        name: row
+  securitySchemes:
+    jwt:
+      bearerFormat: JWT
+      description: JSON Web Token
+      scheme: bearer
+      type: http
+

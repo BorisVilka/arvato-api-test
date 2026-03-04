@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.openapi.generator' version '7.7.0'
+}
+
+group = 'ru.arvato'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "$buildDir/generated/src/main/java"
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'io.projectreactor.netty:reactor-netty-http'
+    implementation 'com.google.code.gson:gson'
+    implementation 'com.squareup.okhttp3:okhttp'
+    implementation 'io.gsonfire:gson-fire:1.9.0'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+openApiGenerate {
+    generatorName = 'java'
+    inputSpec = project.file('src/main/resources/openapi/openapi.json').absolutePath
+    outputDir = "$buildDir/generated"
+    apiPackage = 'ru.arvato.api.generated.api'
+    modelPackage = 'ru.arvato.api.generated.model'
+    invokerPackage = 'ru.arvato.api.generated'
+    configOptions = [
+        library              : 'restclient',
+        dateLibrary          : 'java8',
+        useBeanValidation    : 'false',
+        performBeanValidation: 'false',
+        openApiNullable: 'false'
+    ]
+    globalProperties = [
+        modelDocs: 'false',
+        apiDocs  : 'false'
+    ]
+}
+
+tasks.named('compileJava') {
+    dependsOn tasks.named('openApiGenerate')
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
